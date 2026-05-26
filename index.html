@@ -28,11 +28,9 @@
       --border-blue:rgba(28,62,148,0.20);
       --border-gold:rgba(201,171,75,0.35);
       --shadow-sm:  0 2px 8px rgba(20,33,61,0.08);
-      --shadow-md:  0 4px 16px rgba(20,33,61,0.10);
       --maxw:       480px;
     }
 
-    /* ─── Reset ─────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
@@ -44,13 +42,8 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-    }
+    body { min-height: 100vh; display: flex; justify-content: center; }
 
-    /* ─── App shell ──────────────────────────────────────────────── */
     .app {
       width: 100%;
       max-width: var(--maxw);
@@ -62,90 +55,51 @@
 
     /* ─── Sticky header ──────────────────────────────────────────── */
     .header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      position: sticky; top: 0; z-index: 20;
       background: var(--blue-deep);
       border-bottom: 3px solid var(--gold);
     }
 
     .header-inner {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      padding: 12px 16px;
+      gap: 10px; padding: 12px 16px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
 
     .brand-badge {
-      width: 38px;
-      height: 38px;
-      flex: 0 0 38px;
-      background: var(--red);
-      border: 2px solid var(--gold);
-      display: grid;
-      place-items: center;
-      font-size: 13px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 0.04em;
+      width: 38px; height: 38px; flex: 0 0 38px;
+      background: var(--red); border: 2px solid var(--gold);
+      display: grid; place-items: center;
+      font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 0.04em;
     }
 
     .brand-copy { min-width: 0; }
 
     .brand-dept {
-      display: block;
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 2px;
+      display: block; font-size: 9px; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 2px;
     }
 
     .brand-title {
-      display: block;
-      font-size: 13px;
-      font-weight: 800;
-      color: #fff;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      display: block; font-size: 13px; font-weight: 800; color: #fff;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
     .status-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--green-bg);
-      border: 1px solid var(--green);
-      color: var(--green);
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      white-space: nowrap;
-      flex: 0 0 auto;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--green-bg); border: 1px solid var(--green);
+      color: var(--green); padding: 6px 10px;
+      font-size: 11px; font-weight: 700; white-space: nowrap; flex: 0 0 auto;
     }
 
     .status-dot {
-      width: 7px;
-      height: 7px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
+      width: 7px; height: 7px; background: var(--green);
+      border-radius: 50%; animation: pulse 2s ease-in-out infinite;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
-    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
     /* ─── Hero banner ────────────────────────────────────────────── */
     .hero-banner {
@@ -154,498 +108,305 @@
       padding: 24px 16px 20px;
     }
 
-    .hero-eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
+    .hero-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
 
     .eyebrow-tag {
-      background: var(--gold);
-      color: var(--blue-deep);
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 4px 8px;
+      background: var(--gold); color: var(--blue-deep);
+      font-size: 10px; font-weight: 900; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 8px;
     }
 
     .hero-banner h1 {
-      font-size: 26px;
-      line-height: 1.08;
-      font-weight: 900;
-      letter-spacing: -0.02em;
-      color: #fff;
-      margin-bottom: 12px;
+      font-size: 26px; line-height: 1.08; font-weight: 900;
+      letter-spacing: -0.02em; color: #fff; margin-bottom: 12px;
     }
 
-    .hero-banner h1 em {
-      font-style: normal;
-      color: var(--gold);
-    }
+    .hero-banner h1 em { font-style: normal; color: var(--gold); }
 
     .hero-sub {
-      font-size: 14px;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 20px;
-      max-width: 36ch;
+      font-size: 14px; line-height: 1.55;
+      color: rgba(255,255,255,0.82); margin-bottom: 20px; max-width: 36ch;
     }
 
-    /* ─── CTA buttons ────────────────────────────────────────────── */
-    .cta-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    /* ─── Buttons ────────────────────────────────────────────────── */
+    .cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     .btn {
-      appearance: none;
-      border: 0;
-      width: 100%;
-      min-height: 52px;
-      padding: 13px 14px;
-      font-size: 14px;
-      font-weight: 800;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      cursor: pointer;
+      appearance: none; border: 0; width: 100%; min-height: 52px;
+      padding: 13px 14px; font-size: 14px; font-weight: 800;
+      text-decoration: none; display: inline-flex; align-items: center;
+      justify-content: center; gap: 8px; letter-spacing: 0.02em;
+      text-transform: uppercase; cursor: pointer;
       transition: opacity 0.15s ease, transform 0.15s ease;
     }
 
     .btn:active { transform: scale(0.97); opacity: 0.9; }
-
-    .btn-primary {
-      background: var(--red);
-      color: #fff;
-      border: 2px solid var(--red-dark);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: #fff;
-      border: 2px solid rgba(255,255,255,0.55);
-    }
-
-    .btn-full {
-      grid-column: 1 / -1;
-    }
+    .btn-primary { background: var(--red); color: #fff; border: 2px solid var(--red-dark); }
+    .btn-secondary { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.55); }
 
     /* ─── Content area ───────────────────────────────────────────── */
-    .content {
-      padding: 16px 12px 0;
-      display: grid;
-      gap: 12px;
-    }
+    .content { padding: 16px 12px 0; display: grid; gap: 12px; }
 
     /* ─── Cards ──────────────────────────────────────────────────── */
     .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      padding: 18px 16px;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .card-icon {
-      width: 36px;
-      height: 36px;
-      flex: 0 0 36px;
-      display: grid;
-      place-items: center;
-      font-size: 16px;
-      background: var(--blue-deep);
-      color: #fff;
-    }
-
-    .card-icon.red   { background: var(--red); }
-    .card-icon.gold  { background: var(--gold); color: var(--blue-deep); }
-    .card-icon.green { background: var(--green); }
-
-    .kicker {
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--soft);
-      font-weight: 700;
-      margin-bottom: 3px;
-    }
-
-    .card-header-text h2 {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--blue-deep);
-      line-height: 1.2;
+      background: var(--white); border: 1px solid var(--border);
+      padding: 18px 16px; box-shadow: var(--shadow-sm);
     }
 
     .card h2 {
-      font-size: 19px;
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--blue-deep);
-      margin-bottom: 10px;
+      font-size: 19px; font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.02em; color: var(--blue-deep); margin-bottom: 10px;
     }
 
-    .card p {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
+    .card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
 
-    /* ─── Card variants ──────────────────────────────────────────── */
-    .card-blue {
-      border-left: 4px solid var(--blue);
-    }
+    .card-blue  { border-left: 4px solid var(--blue); }
+    .card-red   { border-left: 4px solid var(--red); background: #fff8f8; border-color: var(--border-red); border-left-color: var(--red); }
+    .card-gold  { border-left: 4px solid var(--gold); background: var(--gold-bg); border-color: var(--border-gold); border-left-color: var(--gold); }
+    .card-green { border-left: 4px solid var(--green); background: var(--green-bg); border-color: rgba(26,122,70,0.25); border-left-color: var(--green); }
 
-    .card-red {
-      border-left: 4px solid var(--red);
-      background: #fff8f8;
-      border-color: var(--border-red);
-      border-left-color: var(--red);
-    }
-
-    .card-gold {
-      border-left: 4px solid var(--gold);
-      background: var(--gold-bg);
-      border-color: var(--border-gold);
-      border-left-color: var(--gold);
-    }
-
-    .card-green {
-      border-left: 4px solid var(--green);
-      background: var(--green-bg);
-      border-color: rgba(26,122,70,0.25);
-      border-left-color: var(--green);
-    }
-
-    /* ─── Section divider label ──────────────────────────────────── */
+    /* ─── Section label ──────────────────────────────────────────── */
     .section-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-weight: 800;
-      color: var(--soft);
-      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+      font-weight: 800; color: var(--soft); margin-bottom: 4px;
     }
 
-    .section-label::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+    .section-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
-    /* ─── List items ─────────────────────────────────────────────── */
-    .list {
-      list-style: none;
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
+    /* ─── Lists ──────────────────────────────────────────────────── */
+    .list { list-style: none; display: grid; gap: 10px; margin-top: 14px; }
 
-    .list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--text);
-    }
+    .list li { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 1.5; color: var(--text); }
 
     .list-icon {
-      width: 26px;
-      height: 26px;
-      flex: 0 0 26px;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      font-weight: 900;
-      color: #fff;
-      background: var(--blue-deep);
+      width: 26px; height: 26px; flex: 0 0 26px;
+      display: grid; place-items: center; font-size: 12px;
+      font-weight: 900; color: #fff; background: var(--blue-deep);
     }
 
     .list-icon.red   { background: var(--red); }
-    .list-icon.gold  { background: var(--gold); color: var(--blue-deep); }
     .list-icon.green { background: var(--green); }
     .list-icon.num   { background: var(--blue); }
 
     /* ─── Pull quote ─────────────────────────────────────────────── */
     .pull-quote {
-      margin-top: 16px;
-      padding: 14px 16px;
-      border-left: 4px solid var(--red);
-      background: #fff0f1;
-      font-size: 16px;
-      font-weight: 800;
-      line-height: 1.35;
-      color: var(--red-dark);
-      letter-spacing: -0.01em;
+      margin-top: 16px; padding: 14px 16px;
+      border-left: 4px solid var(--red); background: #fff0f1;
+      font-size: 16px; font-weight: 800; line-height: 1.35;
+      color: var(--red-dark); letter-spacing: -0.01em;
     }
 
     /* ─── Mini grid ──────────────────────────────────────────────── */
-    .mini-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 14px;
-    }
+    .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
 
-    .mini-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 12px;
-    }
+    .mini-card { background: var(--bg); border: 1px solid var(--border); padding: 12px; }
 
     .mini-card strong {
-      display: block;
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--blue-deep);
-      margin-bottom: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      display: block; font-size: 12px; font-weight: 800; color: var(--blue-deep);
+      margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.04em;
     }
 
-    .mini-card span {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.45;
-    }
+    .mini-card span { font-size: 13px; color: var(--muted); line-height: 1.45; }
 
-    /* ─── Contact stack ──────────────────────────────────────────── */
-    .contact-stack {
-      display: grid;
-      gap: 8px;
-      margin-top: 14px;
-    }
-
+    /* ─── Contact item (dispatch only) ───────────────────────────── */
     .contact-item {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--blue);
-      padding: 14px;
-      transition: border-left-color 0.15s;
-    }
-
-    a.contact-item:hover,
-    a.contact-item:focus {
-      border-left-color: var(--red);
+      display: block; text-decoration: none; color: inherit;
+      background: var(--white); border: 1px solid var(--border);
+      border-left: 4px solid var(--blue); padding: 14px;
     }
 
     .contact-label {
-      display: block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--soft);
-      font-weight: 700;
-      margin-bottom: 5px;
+      display: block; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--soft); font-weight: 700; margin-bottom: 5px;
     }
 
-    .contact-value {
-      display: block;
-      font-size: 17px;
-      font-weight: 800;
-      color: var(--blue-deep);
-      letter-spacing: -0.01em;
-      margin-bottom: 5px;
+    .contact-value { display: block; font-size: 17px; font-weight: 800; color: var(--blue-deep); letter-spacing: -0.01em; margin-bottom: 5px; }
+
+    .contact-note { display: block; font-size: 13px; color: var(--muted); line-height: 1.45; }
+
+    /* ─── CISM commitment notice ─────────────────────────────────── */
+    .cism-pledge {
+      margin-top: 14px; display: flex; gap: 10px; align-items: flex-start;
+      background: rgba(28,62,148,0.07); border: 1px solid var(--border-blue);
+      border-left: 4px solid var(--blue); padding: 12px 14px;
+      font-size: 13px; font-weight: 700; color: var(--blue-deep); line-height: 1.55;
     }
 
-    .contact-note {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.45;
+    .pledge-shield { font-size: 18px; flex: 0 0 auto; margin-top: 1px; }
+
+    /* ─── Team roster ────────────────────────────────────────────── */
+    .team-roster { display: grid; gap: 6px; }
+
+    .team-sub-label {
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      font-weight: 800; color: var(--soft); padding: 8px 0 2px;
+      border-top: 1px solid var(--border); margin-top: 4px;
+    }
+
+    .team-sub-label:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
+
+    .team-member {
+      background: var(--white); border: 1px solid var(--border);
+      border-left: 4px solid var(--blue);
+      padding: 12px 12px 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .team-member.chaplain { border-left-color: var(--gold); }
+
+    .team-member-info { flex: 1; min-width: 0; }
+
+    .team-member-name {
+      display: block; font-size: 15px; font-weight: 800; color: var(--blue-deep);
+      letter-spacing: -0.01em; margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .team-member-role {
+      display: block; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.11em; color: var(--soft); font-weight: 700;
+    }
+
+    .team-actions { display: flex; gap: 6px; flex: 0 0 auto; }
+
+    .team-btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 5px; padding: 9px 14px; font-size: 12px; font-weight: 800;
+      text-decoration: none; letter-spacing: 0.04em; text-transform: uppercase;
+      white-space: nowrap; transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .team-btn:active { opacity: 0.8; transform: scale(0.96); }
+    .team-btn-call { background: var(--red); color: #fff; border: 2px solid var(--red-dark); }
+
+    /* ─── Referral resource entries ──────────────────────────────── */
+    .resource-stack { display: grid; gap: 6px; margin-top: 12px; }
+
+    .resource-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; background: var(--bg);
+      border: 1px solid var(--border); border-left: 3px solid var(--blue);
+      text-decoration: none; color: inherit;
+      transition: border-left-color 0.15s;
+    }
+
+    .resource-row:active { border-left-color: var(--red); }
+
+    .resource-info { flex: 1; min-width: 0; }
+
+    .resource-name {
+      display: block; font-size: 13px; font-weight: 800; color: var(--blue-deep);
+      margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .resource-spec {
+      display: block; font-size: 10px; text-transform: uppercase;
+      letter-spacing: 0.09em; color: var(--soft); font-weight: 700;
+    }
+
+    .resource-dial {
+      flex: 0 0 auto; font-size: 12px; font-weight: 800;
+      color: var(--red); white-space: nowrap;
+    }
+
+    /* ─── First Responder priority programs ──────────────────────── */
+    .fr-stack { display: grid; gap: 8px; margin-top: 12px; }
+
+    .fr-entry {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px; background: var(--white);
+      border: 1px solid var(--border-gold); border-left: 4px solid var(--gold);
+      text-decoration: none; color: inherit;
+      transition: border-left-color 0.15s;
+    }
+
+    .fr-entry:active { border-left-color: var(--red); }
+
+    .fr-entry-info { flex: 1; min-width: 0; }
+
+    .fr-tag {
+      display: inline-block; background: var(--gold); color: var(--blue-deep);
+      font-size: 9px; font-weight: 900; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 2px 6px; margin-bottom: 5px;
+    }
+
+    .fr-name {
+      display: block; font-size: 14px; font-weight: 800;
+      color: var(--blue-deep); margin-bottom: 3px; line-height: 1.2;
+    }
+
+    .fr-note { display: block; font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    .fr-call {
+      flex: 0 0 auto; display: inline-flex; align-items: center;
+      justify-content: center; gap: 5px; padding: 10px 14px;
+      font-size: 12px; font-weight: 800; color: #fff;
+      background: var(--red); border: 2px solid var(--red-dark);
+      white-space: nowrap;
     }
 
     /* ─── Stat bar ───────────────────────────────────────────────── */
-    .stat-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border: 1px solid var(--border);
-      margin-top: 14px;
-    }
+    .stat-bar { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--border); margin-top: 14px; }
 
-    .stat-item {
-      padding: 12px 10px;
-      text-align: center;
-      border-right: 1px solid var(--border);
-    }
-
+    .stat-item { padding: 12px 10px; text-align: center; border-right: 1px solid var(--border); }
     .stat-item:last-child { border-right: 0; }
-
-    .stat-num {
-      display: block;
-      font-size: 22px;
-      font-weight: 900;
-      color: var(--blue-deep);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-
-    .stat-label {
-      display: block;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--soft);
-    }
+    .stat-num { display: block; font-size: 22px; font-weight: 900; color: var(--blue-deep); line-height: 1; margin-bottom: 4px; }
+    .stat-label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--soft); }
 
     /* ─── Footer ─────────────────────────────────────────────────── */
     .footer {
-      margin: 16px 12px 0;
-      background: var(--blue-deep);
-      border-top: 4px solid var(--gold);
-      padding: 24px 16px 20px;
-      color: rgba(255,255,255,0.75);
-      font-size: 13px;
-      line-height: 1.6;
+      margin: 16px 12px 0; background: var(--blue-deep);
+      border-top: 4px solid var(--gold); padding: 24px 16px 20px;
+      color: rgba(255,255,255,0.75); font-size: 13px; line-height: 1.6;
     }
 
     .footer-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 20px;
-      padding-bottom: 16px;
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 20px; padding-bottom: 16px;
       border-bottom: 1px solid rgba(255,255,255,0.15);
     }
 
-    .footer-logo {
-      width: 72px;
-      height: 72px;
-      flex: 0 0 72px;
-      object-fit: contain;
-      /* white background swatch so the circular seal reads cleanly */
-      background: #fff;
-      padding: 4px;
+    .footer-logo { width: 72px; height: 72px; flex: 0 0 72px; object-fit: contain; background: #fff; padding: 4px; }
+
+    .footer-org strong { display: block; font-size: 14px; font-weight: 900; color: #fff; letter-spacing: 0.02em; margin-bottom: 3px; }
+    .footer-org span { font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+
+    .footer-meta { display: grid; gap: 6px; margin-bottom: 16px; }
+    .footer-meta-row { display: flex; gap: 8px; font-size: 12px; }
+    .footer-meta-label { color: var(--gold); font-weight: 700; white-space: nowrap; min-width: 90px; }
+    .footer-meta-value { color: rgba(255,255,255,0.80); }
+
+    .footer-commitment {
+      margin-top: 14px; background: rgba(201,171,75,0.12);
+      border: 1px solid rgba(201,171,75,0.30); border-left: 4px solid var(--gold);
+      padding: 12px 14px; font-size: 12px; color: rgba(255,255,255,0.75); line-height: 1.65;
     }
 
-    .footer-org strong {
-      display: block;
-      font-size: 14px;
-      font-weight: 900;
-      color: #fff;
-      letter-spacing: 0.02em;
-      margin-bottom: 3px;
-    }
-
-    .footer-org span {
-      font-size: 12px;
-      color: var(--gold);
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .footer-meta {
-      display: grid;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-
-    .footer-meta-row {
-      display: flex;
-      gap: 8px;
-      font-size: 12px;
-    }
-
-    .footer-meta-label {
-      color: var(--gold);
-      font-weight: 700;
-      white-space: nowrap;
-      min-width: 90px;
-    }
-
-    .footer-meta-value {
-      color: rgba(255,255,255,0.80);
+    .footer-commitment strong {
+      display: block; color: var(--gold); font-size: 11px;
+      letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 6px;
     }
 
     .footer-disclaimer {
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      border-top: 1px solid rgba(255,255,255,0.10);
-      padding-top: 14px;
-      margin-top: 14px;
-    }
-
-    .footer-placeholders {
-      margin-top: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 12px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.60);
-      line-height: 1.7;
-    }
-
-    .footer-placeholders strong {
-      color: var(--gold);
-      display: block;
-      margin-bottom: 6px;
-      font-size: 11px;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
+      font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6;
+      border-top: 1px solid rgba(255,255,255,0.10); padding-top: 14px; margin-top: 14px;
     }
 
     /* ─── Sticky bottom CTA ──────────────────────────────────────── */
     .sticky-cta {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: var(--maxw);
-      z-index: 30;
-      background: var(--blue-deep);
-      border-top: 3px solid var(--gold);
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: var(--maxw); z-index: 30;
+      background: var(--blue-deep); border-top: 3px solid var(--gold);
+      padding: 10px 12px; display: flex; align-items: center; gap: 10px;
     }
 
-    .sticky-note {
-      flex: 1;
-      font-size: 12px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.80);
-      line-height: 1.3;
-    }
+    .sticky-note { flex: 1; font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.80); line-height: 1.3; }
 
-    .sticky-cta .btn {
-      flex: 0 0 auto;
-      width: auto;
-      min-height: 46px;
-      padding: 10px 18px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
+    .sticky-cta .btn { flex: 0 0 auto; width: auto; min-height: 46px; padding: 10px 18px; font-size: 13px; white-space: nowrap; }
 
-    /* ─── Responsive tweaks ──────────────────────────────────────── */
+    /* ─── Responsive ─────────────────────────────────────────────── */
     @media (max-width: 360px) {
       .hero-banner h1 { font-size: 22px; }
       .cta-row { grid-template-columns: 1fr; }
@@ -653,6 +414,10 @@
       .stat-bar { grid-template-columns: 1fr; }
       .stat-item { border-right: 0; border-bottom: 1px solid var(--border); }
       .stat-item:last-child { border-bottom: 0; }
+      .team-member { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .team-btn { width: 100%; justify-content: center; }
+      .fr-entry { flex-direction: column; align-items: flex-start; }
+      .fr-call { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -686,13 +451,47 @@
     <h1 id="page-title">If a call is staying with you,<br /><em>don't carry it alone.</em></h1>
     <p class="hero-sub">A direct path to trained peer support for responders who need to talk, decompress, or get connected after a hard call.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]">&#128222; Call CISM Now</a>
-      <a class="btn btn-secondary" href="#support-options">How It Works</a>
+      <a class="btn btn-primary" href="tel:3057965355">&#128222; Call CISM Now</a>
+      <a class="btn btn-secondary" href="#support-options">Contact the Team</a>
     </div>
   </section>
 
   <!-- ══ MAIN CONTENT ═══════════════════════════════════════════ -->
   <div class="content">
+
+    <!-- YOU ARE NOT ALONE ───────────────────────────────── -->
+    <div class="section-label">Immediate help — 24/7</div>
+    <article class="card card-red">
+      <h2>You are not alone.</h2>
+      <p>These lines are available around the clock. No appointment. No waiting.</p>
+      <div class="contact-stack" style="margin-top: 14px;">
+
+        <a class="contact-item" href="tel:988" style="border-left-color: var(--red);">
+          <span class="contact-label">Suicide &amp; Crisis Lifeline</span>
+          <span class="contact-value">988</span>
+          <span class="contact-note">&#128222; Call or Text 988 — available 24/7</span>
+        </a>
+
+        <a class="contact-item" href="tel:3057965355" style="border-left-color: var(--red);">
+          <span class="contact-label">Peer Support MBFD Hotline</span>
+          <span class="contact-value">(305) 796-5355</span>
+          <span class="contact-note">&#128222; Miami Beach Fire Department — peer support direct line</span>
+        </a>
+
+        <a class="contact-item" href="tel:3057622629">
+          <span class="contact-label">Regional Peer Support — MDFR</span>
+          <span class="contact-value">Dr. Elio De Jesus</span>
+          <span class="contact-note">&#128222; (305) 762-2629 &middot; Miami-Dade Fire Rescue Peer Support</span>
+        </a>
+
+        <a class="contact-item" href="tel:18776224327">
+          <span class="contact-label">Employee Assistance Program (EAP)</span>
+          <span class="contact-value">1-877-622-4327</span>
+          <span class="contact-note">Confidential counseling 24/7 for City of Miami Beach employees &amp; household members</span>
+        </a>
+
+      </div>
+    </article>
 
     <!-- WHEN TO USE ─────────────────────────────────────── -->
     <div class="section-label">When to reach out</div>
@@ -715,43 +514,251 @@
       <div class="pull-quote">Talking to CISM is not the same as reporting to the department.</div>
     </article>
 
-    <!-- GET SUPPORT ─────────────────────────────────────── -->
-    <div class="section-label" id="support-options">Get support now</div>
-    <article class="card card-gold">
-      <h2>Choose the fastest path.</h2>
-      <p>Use the option that takes the least effort right now. The point is to make contact, not overthink it.</p>
-      <div class="contact-stack">
-        <a class="contact-item" href="tel:[INSERT-CISM-PHONE]">
-          <span class="contact-label">Direct line</span>
-          <span class="contact-value">[INSERT CISM COORDINATOR NAME]</span>
-          <span class="contact-note">&#128222; Call: [INSERT CISM PHONE NUMBER]</span>
-        </a>
-        <div class="contact-item">
-          <span class="contact-label">Dispatch option</span>
-          <span class="contact-value">Request CISM via PSCU / Dispatch</span>
-          <span class="contact-note">Say: "Request CISM support."</span>
-        </div>
-        <div class="contact-item">
-          <span class="contact-label">Peer connection</span>
-          <span class="contact-value">Talk to any known CISM peer, team leader, or peer chaplain</span>
-          <span class="contact-note">They can connect you to the right person fast.</span>
-        </div>
+    <!-- ══ CISM PEER SUPPORT TEAM ══════════════════════════════ -->
+    <div class="section-label" id="support-options">CISM Peer Support Team</div>
+
+    <article class="card card-blue">
+      <h2>Reach out to anyone on this team.</h2>
+      <p>Every member is trained to listen with full discretion. They will hear you out and connect you to the right resource — one-on-one, chaplain, clinician, debriefing, or whatever fits best.</p>
+      <div class="cism-pledge">
+        <span class="pledge-shield">&#128737;</span>
+        <span>By accepting a position on the CISM Peer Support Team, every person whose name appears here has agreed to uphold all CISM confidentiality obligations. That commitment is in effect the moment their name goes on this page.</span>
       </div>
     </article>
 
+    <!-- ── Team Roster ──────────────────────────────────── -->
+    <div class="team-roster" aria-label="CISM Peer Support Team members">
+
+      <div class="team-sub-label">Peer Support Members</div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Nicholas Cantillo</span>
+          <span class="team-member-role">Peer Support &middot; Shift B</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3059620034">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Christian Chavez</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3059514991">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Ryan Escobar</span>
+          <span class="team-member-role">Peer Support &middot; Shift C</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3058032527">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">David Fernandez</span>
+          <span class="team-member-role">Peer Support &middot; Shift B</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7866241048">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Bryan Layton</span>
+          <span class="team-member-role">Peer Support &middot; Shift B</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:9542921025">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Luisa Londono</span>
+          <span class="team-member-role">Peer Support &middot; Shift A</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7864200070">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Sergio Martinez</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:6788495729">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Claudio Navas</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3059038717">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Anthony Prol</span>
+          <span class="team-member-role">Peer Support &middot; Shift A</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3057889478">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Miles Rico</span>
+          <span class="team-member-role">Peer Support &middot; Shift C</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3053364292">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Roland Sanchez</span>
+          <span class="team-member-role">Peer Support &middot; Shift B</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3052449899">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Michael Sica</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7327880867">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Carlos Vinuela</span>
+          <span class="team-member-role">Peer Support &middot; Shift C</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3052024400">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Victor White</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7865563022">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Julian Bernal</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7868374790">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Aracely Polo</span>
+          <span class="team-member-role">Peer Support &middot; Shift D</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3054097113">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">Jairo Talavera</span>
+          <span class="team-member-role">Peer Support &middot; Shift B</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3058963749">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-sub-label">Peer Chaplains</div>
+
+      <div class="team-member chaplain">
+        <div class="team-member-info">
+          <span class="team-member-name">Erica Sommer</span>
+          <span class="team-member-role">Peer Chaplain</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7869992725">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-member chaplain">
+        <div class="team-member-info">
+          <span class="team-member-name">Father Roberto Cid</span>
+          <span class="team-member-role">Peer Chaplain</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:7862521922">&#128222; Call</a>
+        </div>
+      </div>
+
+      <div class="team-sub-label">K9 Therapy Support</div>
+
+      <div class="team-member" style="border-left-color: var(--green);">
+        <div class="team-member-info">
+          <span class="team-member-name">Samantha</span>
+          <span class="team-member-role">K9 Therapy Support</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:3054790525">&#128222; Call</a>
+        </div>
+      </div>
+
+    </div><!-- /team-roster -->
+
+    <!-- Dispatch fallback -->
+    <div style="margin-top: 4px;">
+      <div class="contact-item">
+        <span class="contact-label">Can't reach the team directly?</span>
+        <span class="contact-value">Request CISM via PSCU / Dispatch</span>
+        <span class="contact-note">Say: "Request CISM support." — they will make contact.</span>
+      </div>
+    </div>
+
     <!-- WHAT HAPPENS NEXT ───────────────────────────────── -->
-    <div class="section-label">What happens next</div>
+    <div class="section-label" id="how-it-works">What happens next</div>
     <article class="card card-blue">
       <h2>Simple. Quiet. No drama.</h2>
       <ul class="list">
-        <li><span class="list-icon num">1</span><span>A trained peer reaches out.</span></li>
-        <li><span class="list-icon num">2</span><span>You talk one-on-one, or a small-group option is arranged if that makes more sense.</span></li>
-        <li><span class="list-icon num">3</span><span>If needed, you can be connected to a chaplain, clinician, or follow-up care.</span></li>
+        <li><span class="list-icon num">1</span><span>A trained peer listens — no agenda, no report, no pressure.</span></li>
+        <li><span class="list-icon num">2</span><span>Together you figure out what kind of support fits: one-on-one, small group, chaplain, clinician.</span></li>
+        <li><span class="list-icon num">3</span><span>The peer connects you to that resource — you do not have to navigate it alone.</span></li>
       </ul>
       <div class="mini-grid">
         <div class="mini-card">
           <strong>Available</strong>
-          <span>One-on-one support, defusing, debriefing, follow-up</span>
+          <span>One-on-one, defusing, debriefing, follow-up, referral</span>
         </div>
         <div class="mini-card">
           <strong>Important</strong>
@@ -798,7 +805,7 @@
     <!-- SUPPORT OPTIONS ─────────────────────────────────── -->
     <div class="section-label">Support options</div>
     <article class="card">
-      <h2>More than one kind of help can be available.</h2>
+      <h2>More than one kind of help is available.</h2>
       <div class="mini-grid">
         <div class="mini-card">
           <strong>1-on-1 Peer</strong>
@@ -814,8 +821,220 @@
         </div>
         <div class="mini-card">
           <strong>Additional</strong>
-          <span>Chaplain, canine team, clinician, follow-up referral</span>
+          <span>Chaplain, canine team, clinician, full referral network — see below</span>
         </div>
+      </div>
+    </article>
+
+    <!-- ══ LICENSED REFERRAL NETWORK ═══════════════════════════ -->
+    <div class="section-label">Licensed referral network</div>
+
+    <!-- First Responder Priority Programs -->
+    <article class="card card-gold">
+      <h2>Programs built for first responders.</h2>
+      <p>These programs are specifically designed or designated for first responders — not general public programs adapted for you. Your CISM peer can connect you, or you can call directly.</p>
+      <div class="fr-stack">
+
+        <a class="fr-entry" href="tel:3053749990">
+          <div class="fr-entry-info">
+            <span class="fr-tag">Free for First Responders</span>
+            <span class="fr-name">Trauma Resolution Center</span>
+            <span class="fr-note">Network of therapists &middot; 4343 W Flagler St, Suite 503, Miami &middot; 305-374-9990</span>
+          </div>
+          <span class="fr-call">&#128222; Call</span>
+        </a>
+
+        <a class="fr-entry" href="tel:8442688716">
+          <div class="fr-entry-info">
+            <span class="fr-tag">First Responder Program</span>
+            <span class="fr-name">Florida House Treatment Center</span>
+            <span class="fr-note">Shatterproof Program &middot; 505 S Federal Hwy #2, Deerfield Beach &middot; 844-268-8716</span>
+          </div>
+          <span class="fr-call">&#128222; Call</span>
+        </a>
+
+        <a class="fr-entry" href="tel:8889192619">
+          <div class="fr-entry-info">
+            <span class="fr-tag">First Responders Only</span>
+            <span class="fr-name">Transformations Treatment Center</span>
+            <span class="fr-note">Freedom Now Program &middot; 14000 Military Trail, Dania Beach &middot; 888-919-2619</span>
+          </div>
+          <span class="fr-call">&#128222; Call</span>
+        </a>
+
+      </div>
+    </article>
+
+    <!-- Miami-Dade / Broward Licensed Therapists -->
+    <article class="card card-blue">
+      <h2>Miami-Dade / Broward licensed therapists.</h2>
+      <p>Florida licensed clinicians with experience in individual, group, couples, and family treatment. All listed below serve the Miami-Dade / Broward area.</p>
+
+      <div style="margin-top: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--soft); margin-bottom: 6px;">Individual &middot; Group &middot; Couples &middot; Family</div>
+      <div class="resource-stack">
+
+        <a class="resource-row" href="tel:3058151583">
+          <span class="resource-info">
+            <span class="resource-name">Vania Simon, LMHC</span>
+            <span class="resource-spec">All Wellness Community Center &middot; Miami 33176</span>
+          </span>
+          <span class="resource-dial">&#128222; 305-815-1583</span>
+        </a>
+
+        <a class="resource-row" href="tel:7868737158">
+          <span class="resource-info">
+            <span class="resource-name">Judith Bachay, LMHC, Ph.D.</span>
+            <span class="resource-spec">Individual &middot; Group &middot; Family</span>
+          </span>
+          <span class="resource-dial">&#128222; 786-873-7158</span>
+        </a>
+
+        <a class="resource-row" href="tel:7867492275">
+          <span class="resource-info">
+            <span class="resource-name">Martha Fonseca, LCSW</span>
+            <span class="resource-spec">H.E.A.L. Psychotherapy LLC</span>
+          </span>
+          <span class="resource-dial">&#128222; 786-749-2275</span>
+        </a>
+
+        <a class="resource-row" href="tel:3057886296">
+          <span class="resource-info">
+            <span class="resource-name">Holly McIntyre, LCSW</span>
+            <span class="resource-spec">Individual &middot; Group &middot; Family</span>
+          </span>
+          <span class="resource-dial">&#128222; 305-788-6296</span>
+        </a>
+
+        <a class="resource-row" href="tel:3059293428">
+          <span class="resource-info">
+            <span class="resource-name">Elsa Orlandini, Psy.D</span>
+            <span class="resource-spec">Individual &middot; Group &middot; Family</span>
+          </span>
+          <span class="resource-dial">&#128222; 305-929-3428</span>
+        </a>
+
+        <a class="resource-row" href="tel:3052441940">
+          <span class="resource-info">
+            <span class="resource-name">Patricia Salgado, LMHC</span>
+            <span class="resource-spec">Individual &middot; Group &middot; Family</span>
+          </span>
+          <span class="resource-dial">&#128222; 305-244-1940</span>
+        </a>
+
+        <a class="resource-row" href="tel:7869429425">
+          <span class="resource-info">
+            <span class="resource-name">Netta Shked, Ph.D.</span>
+            <span class="resource-spec">South Beach Psychologist &middot; 1000 5th St #215, Miami Beach</span>
+          </span>
+          <span class="resource-dial">&#128222; 786-942-9425</span>
+        </a>
+
+      </div>
+    </article>
+
+    <!-- Online Resources -->
+    <article class="card card-blue">
+      <h2>Online &amp; digital resources.</h2>
+      <p>Free tools and programs available anytime — for you and your household.</p>
+      <div class="resource-stack" style="margin-top: 12px;">
+
+        <a class="resource-row" href="https://www.iaff.org/behavioralhealth/" target="_blank" rel="noopener">
+          <span class="resource-info">
+            <span class="resource-name">IAFF Behavioral Health</span>
+            <span class="resource-spec">International Assoc. of Fire Fighters &middot; iaff.org/behavioralhealth</span>
+          </span>
+          <span class="resource-dial">&#8599;</span>
+        </a>
+
+        <a class="resource-row" href="https://www.redlinerescue.org" target="_blank" rel="noopener">
+          <span class="resource-info">
+            <span class="resource-name">Red Line Rescue</span>
+            <span class="resource-spec">First responder mental health &middot; redlinerescue.org</span>
+          </span>
+          <span class="resource-dial">&#8599;</span>
+        </a>
+
+        <a class="resource-row" href="https://www.2ndalarmproject.org" target="_blank" rel="noopener">
+          <span class="resource-info">
+            <span class="resource-name">2nd Alarm Project</span>
+            <span class="resource-spec">Firefighter mental health &middot; 2ndalarmproject.org</span>
+          </span>
+          <span class="resource-dial">&#8599;</span>
+        </a>
+
+        <a class="resource-row" href="https://find.divorcecare.org" target="_blank" rel="noopener">
+          <span class="resource-info">
+            <span class="resource-name">DivorceCare</span>
+            <span class="resource-spec">Support groups for separation &amp; divorce &middot; find.divorcecare.org</span>
+          </span>
+          <span class="resource-dial">&#8599;</span>
+        </a>
+
+        <a class="resource-row" href="https://www.miamivineyard.com/divorcecare/" target="_blank" rel="noopener">
+          <span class="resource-info">
+            <span class="resource-name">Miami Vineyard DivorceCare</span>
+            <span class="resource-spec">Local in-person program &middot; miamivineyard.com/divorcecare</span>
+          </span>
+          <span class="resource-dial">&#8599;</span>
+        </a>
+
+      </div>
+
+      <div style="margin-top: 14px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border); border-left: 3px solid var(--blue);">
+        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.10em; color: var(--blue-deep); margin-bottom: 5px;">FREE Virtual &amp; In-Person Counseling</div>
+        <div style="font-size: 13px; color: var(--muted); line-height: 1.6;">
+          <strong style="color: var(--blue-deep);">United Healthcare App</strong> — mental health resources, counseling support, and wellness tools available to City of Miami Beach employees.
+        </div>
+      </div>
+    </article>
+
+    <!-- Full Clinician Network link -->
+    <article class="card card-blue">
+      <h2>Full Licensed Clinician Network</h2>
+      <p>45 Florida licensed clinicians across SE Florida — organized by city, with specialty tags for addiction, crisis, and family support. Curated by the Florida Firefighters Safety &amp; Health Collaborative.</p>
+      <div style="margin-top: 14px;">
+        <a class="btn btn-primary" href="clinicians.html" style="max-width: 280px;">&#128196; View All Clinicians</a>
+      </div>
+    </article>
+
+    <!-- Children, Family & Specialty -->
+    <article class="card card-green">
+      <h2>Children, family &amp; specialty resources.</h2>
+      <p>For personnel whose families need support, or when a referral requires specialty services.</p>
+      <div class="resource-stack">
+
+        <a class="resource-row" href="tel:3055961160">
+          <span class="resource-info">
+            <span class="resource-name">Advocacy Network</span>
+            <span class="resource-spec">Children &amp; adolescents with disabilities &middot; Adults w/ developmental disabilities</span>
+          </span>
+          <span class="resource-dial">&#128222; 305-596-1160</span>
+        </a>
+
+        <a class="resource-row" href="tel:8889885438">
+          <span class="resource-info">
+            <span class="resource-name">Children's Bereavement Center</span>
+            <span class="resource-spec">Children, adolescents &middot; Adult grief groups (loss of child)</span>
+          </span>
+          <span class="resource-dial">&#128222; 888-988-5438</span>
+        </a>
+
+        <a class="resource-row" href="tel:7866647810">
+          <span class="resource-info">
+            <span class="resource-name">Hue Humphrey, M.D.</span>
+            <span class="resource-spec">Psychiatry — children &amp; adolescents &middot; Coral Gables</span>
+          </span>
+          <span class="resource-dial">&#128222; 786-664-7810</span>
+        </a>
+
+        <a class="resource-row" href="tel:8888809270">
+          <span class="resource-info">
+            <span class="resource-name">Butterfly Effects</span>
+            <span class="resource-spec">ABA therapy &middot; Autism spectrum &middot; Deerfield Beach</span>
+          </span>
+          <span class="resource-dial">&#128222; 888-880-9270</span>
+        </a>
+
       </div>
     </article>
 
@@ -842,7 +1061,7 @@
       <h2>This job is heavy. You do not have to carry it alone.</h2>
       <p>Built for responders who need a direct, trustworthy first step. Scan it. Save it. Share it with the person who says they're fine but probably isn't.</p>
       <div style="margin-top: 16px;">
-        <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]" style="max-width: 260px;">&#128222; Call CISM Now</a>
+        <a class="btn btn-primary" href="#support-options" style="max-width: 260px;">&#128101; Contact the Team</a>
       </div>
     </article>
 
@@ -856,8 +1075,7 @@
         class="footer-logo"
         src="MBFD.jpg"
         alt="Miami Beach Fire Department seal"
-        width="72"
-        height="72"
+        width="72" height="72"
       />
       <div class="footer-org">
         <strong>City of Miami Beach<br />Fire Department</strong>
@@ -884,17 +1102,13 @@
       </div>
     </div>
 
-    <div class="footer-disclaimer">
-      This page is intended to provide awareness, education, and access to peer support resources for personnel following exposure to traumatic events, in accordance with departmental policy.
+    <div class="footer-commitment">
+      <strong>&#128737; Team Confidentiality Commitment</strong>
+      All personnel listed on the CISM Peer Support Team page are bound by the confidentiality obligations of the CISM program. Acceptance of a team role constitutes agreement to uphold those obligations in every peer interaction.
     </div>
 
-    <div class="footer-placeholders">
-      <strong>&#9888; Fill before publishing</strong>
-      &bull; [INSERT CISM COORDINATOR NAME]<br />
-      &bull; [INSERT CISM PHONE NUMBER]<br />
-      &bull; [INSERT BACKUP CONTACT]<br />
-      &bull; [INSERT PEER CHAPLAIN CONTACT]<br />
-      &bull; [INSERT OPTIONAL EMAIL / INTERNAL RESOURCE LINK]
+    <div class="footer-disclaimer">
+      This page is intended to provide awareness, education, and access to peer support resources for personnel following exposure to traumatic events, in accordance with departmental policy. Referral network contacts are Florida licensed clinicians; listings do not constitute departmental endorsement.
     </div>
 
   </footer>
@@ -902,9 +1116,9 @@
 </main>
 
 <!-- ══ STICKY BOTTOM CTA ════════════════════════════════════════ -->
-<div class="sticky-cta" role="complementary" aria-label="Quick call access">
-  <div class="sticky-note">Confidential support is one tap away.</div>
-  <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]">&#128222; Call Now</a>
+<div class="sticky-cta" role="complementary" aria-label="Quick access to peer support team">
+  <div class="sticky-note">Confidential peer support available 24/7.<br />305-796-5355</div>
+  <a class="btn btn-primary" href="tel:3057965355">&#128222; Call Now</a>
 </div>
 
 </body>
