@@ -430,7 +430,7 @@
       line-height: 1.45;
     }
 
-    /* ─── Contact stack ──────────────────────────────────────────── */
+    /* ─── Contact stack (dispatch / dispatch-only items) ─────────── */
     .contact-stack {
       display: grid;
       gap: 8px;
@@ -477,6 +477,106 @@
       font-size: 13px;
       color: var(--muted);
       line-height: 1.45;
+    }
+
+    /* ─── CISM commitment notice ─────────────────────────────────── */
+    .cism-pledge {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: rgba(28,62,148,0.07);
+      border: 1px solid var(--border-blue);
+      border-left: 4px solid var(--blue);
+      padding: 12px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--blue-deep);
+      line-height: 1.55;
+    }
+
+    .pledge-shield {
+      font-size: 18px;
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    /* ─── Team roster ────────────────────────────────────────────── */
+    .team-roster {
+      display: grid;
+      gap: 8px;
+    }
+
+    .team-member {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--blue);
+      padding: 14px 12px 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .team-member-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .team-member-name {
+      display: block;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--blue-deep);
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .team-member-role {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+      font-weight: 700;
+    }
+
+    .team-actions {
+      display: flex;
+      gap: 6px;
+      flex: 0 0 auto;
+    }
+
+    .team-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .team-btn:active { opacity: 0.8; transform: scale(0.96); }
+
+    .team-btn-call {
+      background: var(--red);
+      color: #fff;
+      border: 2px solid var(--red-dark);
+    }
+
+    .team-btn-email {
+      background: transparent;
+      color: var(--blue-deep);
+      border: 2px solid var(--border-blue);
     }
 
     /* ─── Stat bar ───────────────────────────────────────────────── */
@@ -538,7 +638,6 @@
       height: 72px;
       flex: 0 0 72px;
       object-fit: contain;
-      /* white background swatch so the circular seal reads cleanly */
       background: #fff;
       padding: 4px;
     }
@@ -592,23 +691,24 @@
       margin-top: 14px;
     }
 
-    .footer-placeholders {
+    .footer-commitment {
       margin-top: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 12px;
+      background: rgba(201,171,75,0.12);
+      border: 1px solid rgba(201,171,75,0.30);
+      border-left: 4px solid var(--gold);
+      padding: 12px 14px;
       font-size: 12px;
-      color: rgba(255,255,255,0.60);
-      line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
     }
 
-    .footer-placeholders strong {
-      color: var(--gold);
+    .footer-commitment strong {
       display: block;
-      margin-bottom: 6px;
+      color: var(--gold);
       font-size: 11px;
       letter-spacing: 0.10em;
       text-transform: uppercase;
+      margin-bottom: 6px;
     }
 
     /* ─── Sticky bottom CTA ──────────────────────────────────────── */
@@ -653,6 +753,9 @@
       .stat-bar { grid-template-columns: 1fr; }
       .stat-item { border-right: 0; border-bottom: 1px solid var(--border); }
       .stat-item:last-child { border-bottom: 0; }
+      .team-member { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .team-actions { width: 100%; }
+      .team-btn { flex: 1; justify-content: center; }
     }
   </style>
 </head>
@@ -686,8 +789,8 @@
     <h1 id="page-title">If a call is staying with you,<br /><em>don't carry it alone.</em></h1>
     <p class="hero-sub">A direct path to trained peer support for responders who need to talk, decompress, or get connected after a hard call.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]">&#128222; Call CISM Now</a>
-      <a class="btn btn-secondary" href="#support-options">How It Works</a>
+      <a class="btn btn-primary" href="#support-options">&#128101; Contact the Team</a>
+      <a class="btn btn-secondary" href="#how-it-works">How It Works</a>
     </div>
   </section>
 
@@ -715,43 +818,108 @@
       <div class="pull-quote">Talking to CISM is not the same as reporting to the department.</div>
     </article>
 
-    <!-- GET SUPPORT ─────────────────────────────────────── -->
-    <div class="section-label" id="support-options">Get support now</div>
-    <article class="card card-gold">
-      <h2>Choose the fastest path.</h2>
-      <p>Use the option that takes the least effort right now. The point is to make contact, not overthink it.</p>
-      <div class="contact-stack">
-        <a class="contact-item" href="tel:[INSERT-CISM-PHONE]">
-          <span class="contact-label">Direct line</span>
-          <span class="contact-value">[INSERT CISM COORDINATOR NAME]</span>
-          <span class="contact-note">&#128222; Call: [INSERT CISM PHONE NUMBER]</span>
-        </a>
-        <div class="contact-item">
-          <span class="contact-label">Dispatch option</span>
-          <span class="contact-value">Request CISM via PSCU / Dispatch</span>
-          <span class="contact-note">Say: "Request CISM support."</span>
-        </div>
-        <div class="contact-item">
-          <span class="contact-label">Peer connection</span>
-          <span class="contact-value">Talk to any known CISM peer, team leader, or peer chaplain</span>
-          <span class="contact-note">They can connect you to the right person fast.</span>
-        </div>
+    <!-- CISM PEER SUPPORT TEAM ──────────────────────────── -->
+    <div class="section-label" id="support-options">CISM Peer Support Team</div>
+
+    <!-- Commitment notice -->
+    <article class="card card-blue">
+      <h2>Reach out to anyone on this team.</h2>
+      <p>Every member listed here is trained to listen with full discretion. They will hear you out and help connect you to the right resource — a follow-up conversation, chaplain, clinician, structured debriefing, or whatever fits best.</p>
+      <div class="cism-pledge">
+        <span class="pledge-shield">&#128737;</span>
+        <span>By accepting a position on the CISM Peer Support Team, every person whose name appears here has agreed to uphold all CISM confidentiality obligations. That commitment is in effect the moment their name goes on this page.</span>
       </div>
     </article>
 
+    <!-- Team roster — add or remove .team-member blocks as needed -->
+    <div class="team-roster" aria-label="CISM Peer Support Team members">
+
+      <!-- ── Member 1 ── -->
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">[MEMBER 1 NAME]</span>
+          <span class="team-member-role">[MEMBER 1 ROLE / TITLE]</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:[MEMBER-1-PHONE]">&#128222; Call</a>
+          <a class="team-btn team-btn-email" href="mailto:[MEMBER-1-EMAIL]">&#9993; Email</a>
+        </div>
+      </div>
+
+      <!-- ── Member 2 ── -->
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">[MEMBER 2 NAME]</span>
+          <span class="team-member-role">[MEMBER 2 ROLE / TITLE]</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:[MEMBER-2-PHONE]">&#128222; Call</a>
+          <a class="team-btn team-btn-email" href="mailto:[MEMBER-2-EMAIL]">&#9993; Email</a>
+        </div>
+      </div>
+
+      <!-- ── Member 3 ── -->
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">[MEMBER 3 NAME]</span>
+          <span class="team-member-role">[MEMBER 3 ROLE / TITLE]</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:[MEMBER-3-PHONE]">&#128222; Call</a>
+          <a class="team-btn team-btn-email" href="mailto:[MEMBER-3-EMAIL]">&#9993; Email</a>
+        </div>
+      </div>
+
+      <!-- ── Member 4 ── -->
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">[MEMBER 4 NAME]</span>
+          <span class="team-member-role">[MEMBER 4 ROLE / TITLE]</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:[MEMBER-4-PHONE]">&#128222; Call</a>
+          <a class="team-btn team-btn-email" href="mailto:[MEMBER-4-EMAIL]">&#9993; Email</a>
+        </div>
+      </div>
+
+      <!-- ── Member 5 ── -->
+      <div class="team-member">
+        <div class="team-member-info">
+          <span class="team-member-name">[MEMBER 5 NAME]</span>
+          <span class="team-member-role">[MEMBER 5 ROLE / TITLE]</span>
+        </div>
+        <div class="team-actions">
+          <a class="team-btn team-btn-call" href="tel:[MEMBER-5-PHONE]">&#128222; Call</a>
+          <a class="team-btn team-btn-email" href="mailto:[MEMBER-5-EMAIL]">&#9993; Email</a>
+        </div>
+      </div>
+
+      <!-- Add more members above this line — copy a .team-member block -->
+
+    </div><!-- /team-roster -->
+
+    <!-- Dispatch fallback -->
+    <div class="contact-stack" style="margin-top: 4px;">
+      <div class="contact-item">
+        <span class="contact-label">Can't reach the team directly?</span>
+        <span class="contact-value">Request CISM via PSCU / Dispatch</span>
+        <span class="contact-note">Say: "Request CISM support." — they will make contact.</span>
+      </div>
+    </div>
+
     <!-- WHAT HAPPENS NEXT ───────────────────────────────── -->
-    <div class="section-label">What happens next</div>
+    <div class="section-label" id="how-it-works">What happens next</div>
     <article class="card card-blue">
       <h2>Simple. Quiet. No drama.</h2>
       <ul class="list">
-        <li><span class="list-icon num">1</span><span>A trained peer reaches out.</span></li>
-        <li><span class="list-icon num">2</span><span>You talk one-on-one, or a small-group option is arranged if that makes more sense.</span></li>
-        <li><span class="list-icon num">3</span><span>If needed, you can be connected to a chaplain, clinician, or follow-up care.</span></li>
+        <li><span class="list-icon num">1</span><span>A trained peer listens — no agenda, no report, no pressure.</span></li>
+        <li><span class="list-icon num">2</span><span>Together you figure out what kind of support fits: one-on-one, small group, chaplain, clinician.</span></li>
+        <li><span class="list-icon num">3</span><span>The peer connects you to that resource — you do not have to navigate it alone.</span></li>
       </ul>
       <div class="mini-grid">
         <div class="mini-card">
           <strong>Available</strong>
-          <span>One-on-one support, defusing, debriefing, follow-up</span>
+          <span>One-on-one, defusing, debriefing, follow-up, referral</span>
         </div>
         <div class="mini-card">
           <strong>Important</strong>
@@ -842,7 +1010,7 @@
       <h2>This job is heavy. You do not have to carry it alone.</h2>
       <p>Built for responders who need a direct, trustworthy first step. Scan it. Save it. Share it with the person who says they're fine but probably isn't.</p>
       <div style="margin-top: 16px;">
-        <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]" style="max-width: 260px;">&#128222; Call CISM Now</a>
+        <a class="btn btn-primary" href="#support-options" style="max-width: 260px;">&#128101; Contact the Team</a>
       </div>
     </article>
 
@@ -884,17 +1052,13 @@
       </div>
     </div>
 
-    <div class="footer-disclaimer">
-      This page is intended to provide awareness, education, and access to peer support resources for personnel following exposure to traumatic events, in accordance with departmental policy.
+    <div class="footer-commitment">
+      <strong>&#128737; Team Confidentiality Commitment</strong>
+      All personnel listed on the CISM Peer Support Team page are bound by the confidentiality obligations of the CISM program. Acceptance of a team role constitutes agreement to uphold those obligations in every peer interaction.
     </div>
 
-    <div class="footer-placeholders">
-      <strong>&#9888; Fill before publishing</strong>
-      &bull; [INSERT CISM COORDINATOR NAME]<br />
-      &bull; [INSERT CISM PHONE NUMBER]<br />
-      &bull; [INSERT BACKUP CONTACT]<br />
-      &bull; [INSERT PEER CHAPLAIN CONTACT]<br />
-      &bull; [INSERT OPTIONAL EMAIL / INTERNAL RESOURCE LINK]
+    <div class="footer-disclaimer">
+      This page is intended to provide awareness, education, and access to peer support resources for personnel following exposure to traumatic events, in accordance with departmental policy.
     </div>
 
   </footer>
@@ -902,9 +1066,9 @@
 </main>
 
 <!-- ══ STICKY BOTTOM CTA ════════════════════════════════════════ -->
-<div class="sticky-cta" role="complementary" aria-label="Quick call access">
-  <div class="sticky-note">Confidential support is one tap away.</div>
-  <a class="btn btn-primary" href="tel:[INSERT-CISM-PHONE]">&#128222; Call Now</a>
+<div class="sticky-cta" role="complementary" aria-label="Quick access to peer support team">
+  <div class="sticky-note">Trained peers are ready to listen.<br />Discreet. Confidential. No pressure.</div>
+  <a class="btn btn-primary" href="#support-options">&#128101; The Team</a>
 </div>
 
 </body>
