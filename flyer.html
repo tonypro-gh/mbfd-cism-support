@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MBFD CISM Peer Support — Station Flyer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Print setup ────────────────────────────────────────── */
+    @page {
+      size: letter portrait;
+      margin: 0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #888;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 0 40px;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Screen-only print hint */
+    .print-hint {
+      background: #132d6e;
+      color: #c9ab4b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      margin-bottom: 16px;
+      width: 8.5in;
+      text-align: center;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .print-hint { display: none; }
+    }
+
+    /* ─── Flyer shell ────────────────────────────────────────── */
+    .flyer {
+      width: 8.5in;
+      height: 11in;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.35);
+    }
+
+    /* ─── Gold top rule ──────────────────────────────────────── */
+    .top-rule {
+      background: #c9ab4b;
+      height: 10px;
+      flex: 0 0 10px;
+    }
+
+    /* ─── Header bar ─────────────────────────────────────────── */
+    .header-bar {
+      background: #132d6e;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 0 0 auto;
+    }
+
+    .header-bar-left {
+      font-size: 9pt;
+      font-weight: 900;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.70);
+    }
+
+    .header-bar-right {
+      font-size: 9pt;
+      font-weight: 900;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: #c9ab4b;
+    }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero {
+      background: #132d6e;
+      border-bottom: 6px solid #c61f2c;
+      padding: 28px 32px 26px;
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      flex: 0 0 auto;
+    }
+
+    .hero-seal {
+      width: 115px;
+      height: 115px;
+      flex: 0 0 115px;
+      object-fit: contain;
+      background: white;
+      padding: 5px;
+    }
+
+    .hero-copy { flex: 1; min-width: 0; }
+
+    .hero-kicker {
+      font-size: 9pt;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #c9ab4b;
+      margin-bottom: 10px;
+    }
+
+    .hero-headline {
+      font-size: 52pt;
+      font-weight: 900;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: white;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .hero-headline em {
+      font-style: normal;
+      color: #c9ab4b;
+    }
+
+    .hero-sub {
+      font-size: 12pt;
+      font-weight: 700;
+      color: rgba(255,255,255,0.80);
+      line-height: 1.45;
+      max-width: 34ch;
+    }
+
+    /* ─── Body area ──────────────────────────────────────────── */
+    .body-area {
+      flex: 1;
+      background: #f4f5f8;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    /* ─── Left: QR column ────────────────────────────────────── */
+    .qr-column {
+      flex: 0 0 3.2in;
+      background: white;
+      border-right: 3px solid #d1d9e6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 20px;
+      gap: 14px;
+    }
+
+    .qr-instruction {
+      font-size: 9pt;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #718096;
+      text-align: center;
+    }
+
+    .qr-frame {
+      border: 4px solid #132d6e;
+      padding: 10px;
+      background: white;
+    }
+
+    .qr-frame img {
+      display: block;
+      width: 220px;
+      height: 220px;
+    }
+
+    .qr-arrow {
+      font-size: 22pt;
+      color: #132d6e;
+    }
+
+    .qr-url {
+      font-size: 8pt;
+      font-weight: 800;
+      color: #4a5568;
+      letter-spacing: 0.05em;
+      text-align: center;
+      word-break: break-all;
+    }
+
+    .qr-caption {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #718096;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ─── Right: Contacts column ─────────────────────────────── */
+    .contacts-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 18px 20px;
+      gap: 10px;
+    }
+
+    .contacts-heading {
+      font-size: 8pt;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #718096;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #d1d9e6;
+    }
+
+    .contact-card {
+      background: white;
+      border: 1px solid #d1d9e6;
+      border-left: 5px solid #132d6e;
+      padding: 12px 14px;
+    }
+
+    .contact-card.red   { border-left-color: #c61f2c; }
+    .contact-card.gold  { border-left-color: #c9ab4b; background: #fdf6e3; }
+    .contact-card.green { border-left-color: #1a7a46; background: #e8f5ee; }
+
+    .cc-label {
+      font-size: 7.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: #718096;
+      margin-bottom: 4px;
+    }
+
+    .cc-number {
+      font-size: 26pt;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: #132d6e;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .cc-number.small { font-size: 18pt; }
+
+    .cc-note {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #4a5568;
+      line-height: 1.4;
+    }
+
+    .what-inside {
+      background: #132d6e;
+      padding: 12px 14px;
+      margin-top: auto;
+    }
+
+    .wi-label {
+      font-size: 7.5pt;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: #c9ab4b;
+      margin-bottom: 7px;
+    }
+
+    .wi-items {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .wi-item {
+      font-size: 8pt;
+      font-weight: 700;
+      color: rgba(255,255,255,0.80);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .wi-dot {
+      width: 5px;
+      height: 5px;
+      background: #c9ab4b;
+      flex: 0 0 5px;
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    .footer {
+      background: #132d6e;
+      border-top: 4px solid #c9ab4b;
+      padding: 13px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 0 0 auto;
+    }
+
+    .footer-chips {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer-chip {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 9pt;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .chip-dot {
+      width: 7px;
+      height: 7px;
+      background: #c9ab4b;
+    }
+
+    .footer-auth {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: rgba(255,255,255,0.50);
+      text-align: right;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-hint">
+    &#128438; Print: Ctrl+P (Windows) or Cmd+P (Mac) &mdash; enable "Background graphics" &mdash; set margins to None
+  </div>
+
+  <div class="flyer">
+
+    <!-- Gold top rule -->
+    <div class="top-rule"></div>
+
+    <!-- Header bar -->
+    <div class="header-bar">
+      <span class="header-bar-left">Miami Beach Fire Department</span>
+      <span class="header-bar-right">CISM Peer Support Program</span>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+      <img class="hero-seal" src="MBFD.jpg" alt="Miami Beach Fire Department seal" />
+      <div class="hero-copy">
+        <div class="hero-kicker">For every member of this department</div>
+        <div class="hero-headline">You Are<br /><em>Not Alone.</em></div>
+        <div class="hero-sub">If a call is staying with you — trained peers are ready to listen. Confidential. No judgment. No report.</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="body-area">
+
+      <!-- QR Column -->
+      <div class="qr-column">
+        <div class="qr-instruction">Scan with<br />your phone camera</div>
+        <div class="qr-frame">
+          <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https%3A%2F%2Fmbfdpeer.github.io%2FMBPeerAPP%2F&bgcolor=FFFFFF&color=132d6e&ecc=H&margin=10"
+            alt="QR Code — MBFD CISM Peer Support"
+            width="220"
+            height="220"
+          />
+        </div>
+        <div class="qr-url">mbfdpeer.github.io/MBPeerAPP</div>
+        <div class="qr-caption">Access the full peer support<br />team, resources &amp; clinician<br />directory from your phone</div>
+      </div>
+
+      <!-- Contacts Column -->
+      <div class="contacts-column">
+
+        <div class="contacts-heading">Direct contacts &mdash; available 24 / 7</div>
+
+        <div class="contact-card red">
+          <div class="cc-label">MBFD Peer Support Line</div>
+          <div class="cc-number">305-796-5355</div>
+          <div class="cc-note">&#128222; Call anytime &mdash; direct peer support</div>
+        </div>
+
+        <div class="contact-card">
+          <div class="cc-label">Suicide &amp; Crisis Lifeline</div>
+          <div class="cc-number">988</div>
+          <div class="cc-note">&#128222; Call or Text 988 &mdash; 24 / 7 nationwide</div>
+        </div>
+
+        <div class="contact-card gold">
+          <div class="cc-label">Employee Assistance Program (EAP)</div>
+          <div class="cc-number small">1-877-622-4327</div>
+          <div class="cc-note">Confidential counseling &mdash; City of Miami Beach employees &amp; household members</div>
+        </div>
+
+        <div class="contact-card green">
+          <div class="cc-label">K9 Therapy Support</div>
+          <div class="cc-number small">305-479-0525</div>
+          <div class="cc-note">&#128054; Samantha &mdash; canine therapy support</div>
+        </div>
+
+        <div class="what-inside">
+          <div class="wi-label">What's in the app</div>
+          <div class="wi-items">
+            <div class="wi-item"><div class="wi-dot"></div>Full peer support team with direct call buttons</div>
+            <div class="wi-item"><div class="wi-dot"></div>Chaplain support &mdash; Father Roberto Cid &amp; Erica Sommer</div>
+            <div class="wi-item"><div class="wi-dot"></div>45+ licensed clinicians across SE Florida</div>
+            <div class="wi-item"><div class="wi-dot"></div>First Responder specialty programs</div>
+            <div class="wi-item"><div class="wi-dot"></div>Online mental health resources</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div><!-- /body-area -->
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-chips">
+        <div class="footer-chip"><div class="chip-dot"></div>Confidential</div>
+        <div class="footer-chip"><div class="chip-dot"></div>Peer-Based</div>
+        <div class="footer-chip"><div class="chip-dot"></div>Available 24 / 7</div>
+        <div class="footer-chip"><div class="chip-dot"></div>No Judgment</div>
+      </div>
+      <div class="footer-auth">
+        Authorized by Fire Chief Digna Abello<br />
+        City of Miami Beach Fire Department
+      </div>
+    </div>
+
+  </div><!-- /flyer -->
+
+</body>
+</html>
