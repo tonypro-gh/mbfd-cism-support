@@ -86,12 +86,12 @@
 
     /* ── Hero ────────────────────────────────────────────────── */
     .hero {
-      flex: 0 0 2.95in;
+      flex: 0 0 2.72in;
       background: #132d6e;
       display: grid;
       grid-template-columns: 3.4in 1fr;
       align-items: center;
-      padding: 18px 36px 18px 32px;
+      padding: 13px 36px 13px 32px;
       border-bottom: 6px solid #c61f2c;
     }
 
@@ -102,8 +102,8 @@
     }
 
     .logo {
-      width: 2.38in;
-      height: 2.38in;
+      width: 2.14in;
+      height: 2.14in;
       display: block;
       border-radius: 50%;
       object-fit: cover;
@@ -142,11 +142,12 @@
 
     /* ── Body ────────────────────────────────────────────────── */
     .body-section {
-      flex: 1;
+      flex: 0 0 calc(11in - 0.14in - 1.0in - 2.72in - 1.02in - 0.52in);
       min-height: 0;
       background: #f4f5f8;
       display: grid;
       grid-template-columns: 3.4in 1fr;
+      grid-template-rows: 100%;
       overflow: hidden;
     }
 
@@ -157,8 +158,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 22px 28px;
-      gap: 16px;
+      padding: 18px 28px;
+      gap: 14px;
+      overflow: hidden;
     }
 
     .qr-title {
@@ -191,10 +193,10 @@
     }
 
     .contact-column {
-      padding: 14px 22px 12px;
+      padding: 12px 22px 10px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 7px;
       overflow: hidden;
     }
 
@@ -212,7 +214,7 @@
       background: #ffffff;
       border: 1px solid #d1d9e6;
       border-left: 6px solid #132d6e;
-      padding: 10px 14px 9px;
+      padding: 9px 14px 8px;
     }
 
     .contact-card.red { border-left-color: #c61f2c; }
@@ -227,15 +229,15 @@
     }
 
     .contact-number {
-      font-size: 27pt;
+      font-size: 24pt;
       line-height: 1;
       font-weight: 900;
       letter-spacing: -.02em;
       color: #132d6e;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
     }
 
-    .contact-number.small { font-size: 19pt; }
+    .contact-number.small { font-size: 17pt; }
 
     .contact-note {
       font-size: 8.5pt;
