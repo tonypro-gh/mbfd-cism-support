@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MBFD CISM Peer Support — Station Flyer</title>
+  <title>MBFD CISM Peer Support - Station Flyer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet" />
@@ -28,7 +28,7 @@
 
     body { padding: 24px 0 36px; }
 
-    /* ── Flyer shell ─────────────────────────────────────────── */
+    /* ── Flyer shell: exactly 8.5 x 11 in ───────────────────── */
     .flyer {
       width: 8.5in;
       height: 11in;
@@ -39,17 +39,17 @@
       box-shadow: 0 20px 50px rgba(0,0,0,.60);
     }
 
-    /* ── Top stripe ──────────────────────────────────────────── */
+    /* ── 1. Top stripe  0.12in ───────────────────────────────── */
     .top-stripe {
-      flex: 0 0 0.14in;
+      flex: 0 0 0.12in;
       background: #c61f2c;
     }
 
-    /* ── Header ──────────────────────────────────────────────── */
+    /* ── 2. Header  0.92in ───────────────────────────────────── */
     .header {
-      flex: 0 0 1.0in;
+      flex: 0 0 0.92in;
       background: #132d6e;
-      padding: 0 40px;
+      padding: 0 38px;
       display: grid;
       grid-template-columns: 1fr 2px 1fr;
       align-items: center;
@@ -57,7 +57,7 @@
     }
 
     .header-left {
-      font-size: 22pt;
+      font-size: 20pt;
       line-height: 1.1;
       font-weight: 900;
       letter-spacing: .03em;
@@ -67,14 +67,14 @@
 
     .header-divider {
       width: 2px;
-      height: 58px;
-      background: rgba(255,255,255,0.25);
+      height: 52px;
+      background: rgba(255,255,255,0.22);
       justify-self: center;
     }
 
     .header-right {
       text-align: center;
-      font-size: 19pt;
+      font-size: 17pt;
       line-height: 1.18;
       font-weight: 900;
       letter-spacing: .06em;
@@ -84,15 +84,15 @@
     .header-right .red   { color: #c61f2c; display: block; }
     .header-right .white { color: #ffffff;  display: block; }
 
-    /* ── Hero ────────────────────────────────────────────────── */
+    /* ── 3. Hero  2.62in ─────────────────────────────────────── */
     .hero {
-      flex: 0 0 2.72in;
+      flex: 0 0 2.62in;
       background: #132d6e;
       display: grid;
-      grid-template-columns: 3.4in 1fr;
+      grid-template-columns: 3.2in 1fr;
       align-items: center;
-      padding: 13px 36px 13px 32px;
-      border-bottom: 6px solid #c61f2c;
+      padding: 12px 34px 12px 30px;
+      border-bottom: 5px solid #c61f2c;
     }
 
     .logo-wrap {
@@ -102,29 +102,29 @@
     }
 
     .logo {
-      width: 2.14in;
-      height: 2.14in;
+      width: 2.0in;
+      height: 2.0in;
       display: block;
       border-radius: 50%;
       object-fit: cover;
-      filter: drop-shadow(0 8px 16px rgba(0,0,0,.50));
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,.50));
     }
 
     .hero-copy { color: #fff; }
 
     .kicker {
-      font-size: 9pt;
+      font-size: 8.5pt;
       font-weight: 900;
-      letter-spacing: .16em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: #c61f2c;
-      margin-bottom: 11px;
+      margin-bottom: 9px;
       line-height: 1.3;
     }
 
     .headline {
-      margin: 0 0 16px;
-      font-size: 50pt;
+      margin: 0 0 12px;
+      font-size: 46pt;
       line-height: .92;
       font-weight: 900;
       letter-spacing: .02em;
@@ -133,21 +133,20 @@
     }
 
     .hero-subtext {
-      font-size: 11.5pt;
-      line-height: 1.45;
+      font-size: 10.5pt;
+      line-height: 1.44;
       font-weight: 700;
       color: rgba(255,255,255,0.82);
-      max-width: 27ch;
+      max-width: 26ch;
     }
 
-    /* ── Body ────────────────────────────────────────────────── */
+    /* ── 4. Body  flex:1 fills remaining ─────────────────────── */
     .body-section {
-      flex: 0 0 calc(11in - 0.14in - 1.0in - 2.72in - 1.02in - 0.52in);
+      flex: 1;
       min-height: 0;
       background: #f4f5f8;
       display: grid;
-      grid-template-columns: 3.4in 1fr;
-      grid-template-rows: 100%;
+      grid-template-columns: 3.2in 1fr;
       overflow: hidden;
     }
 
@@ -158,15 +157,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 18px 28px;
-      gap: 14px;
+      padding: 16px 24px;
+      gap: 12px;
       overflow: hidden;
     }
 
     .qr-title {
-      font-size: 9pt;
+      font-size: 8.5pt;
       font-weight: 900;
-      letter-spacing: .16em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: #132d6e;
       text-align: center;
@@ -174,26 +173,26 @@
 
     .qr-box {
       border: 4px solid #132d6e;
-      padding: 10px;
+      padding: 8px;
       background: white;
     }
 
     .qr-box img {
-      width: 210px;
-      height: 210px;
+      width: 196px;
+      height: 196px;
       display: block;
     }
 
     .qr-caption {
-      font-size: 9pt;
+      font-size: 8.5pt;
       font-weight: 700;
       color: #4a5568;
       text-align: center;
-      line-height: 1.55;
+      line-height: 1.5;
     }
 
     .contact-column {
-      padding: 12px 22px 10px;
+      padding: 12px 20px 10px;
       display: flex;
       flex-direction: column;
       gap: 7px;
@@ -201,35 +200,37 @@
     }
 
     .contact-title {
-      font-size: 7.5pt;
+      font-size: 7pt;
       font-weight: 900;
-      letter-spacing: .16em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       color: #718096;
-      padding-bottom: 9px;
+      padding-bottom: 7px;
       border-bottom: 2px solid #d1d9e6;
+      flex-shrink: 0;
     }
 
     .contact-card {
       background: #ffffff;
       border: 1px solid #d1d9e6;
       border-left: 6px solid #132d6e;
-      padding: 9px 14px 8px;
+      padding: 9px 13px 8px;
+      flex-shrink: 0;
     }
 
     .contact-card.red { border-left-color: #c61f2c; }
 
     .contact-label {
-      font-size: 7pt;
+      font-size: 6.5pt;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: .13em;
+      letter-spacing: .12em;
       color: #718096;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
 
     .contact-number {
-      font-size: 24pt;
+      font-size: 22pt;
       line-height: 1;
       font-weight: 900;
       letter-spacing: -.02em;
@@ -237,36 +238,37 @@
       margin-bottom: 2px;
     }
 
-    .contact-number.small { font-size: 17pt; }
+    .contact-number.small { font-size: 16pt; }
 
     .contact-note {
-      font-size: 8.5pt;
+      font-size: 8pt;
       font-weight: 700;
       color: #4a5568;
-      line-height: 1.4;
+      line-height: 1.35;
     }
 
-    /* ── App + Auth bar ──────────────────────────────────────── */
+    /* ── 5. App + Auth bar  0.98in ───────────────────────────── */
     .app-auth {
-      flex: 0 0 1.02in;
+      flex: 0 0 0.98in;
       background: #132d6e;
       display: grid;
-      grid-template-columns: 3.4in 1fr;
+      grid-template-columns: 3.2in 1fr;
       border-top: 4px solid #c61f2c;
+      overflow: hidden;
     }
 
     .app-box {
-      padding: 14px 22px;
+      padding: 12px 20px;
       border-right: 1px solid rgba(255,255,255,0.12);
     }
 
     .app-title {
-      font-size: 7.5pt;
+      font-size: 7pt;
       font-weight: 900;
       letter-spacing: .14em;
       text-transform: uppercase;
       color: #c9ab4b;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
     }
 
     .app-list {
@@ -275,17 +277,17 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
     .app-list li {
-      font-size: 8pt;
+      font-size: 7.5pt;
       line-height: 1.28;
       font-weight: 700;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.85);
       display: flex;
       align-items: flex-start;
-      gap: 8px;
+      gap: 7px;
     }
 
     .app-list li::before {
@@ -294,43 +296,46 @@
       height: 5px;
       background: #c61f2c;
       flex: 0 0 5px;
-      margin-top: 4px;
+      margin-top: 3px;
     }
 
     .auth-box {
-      padding: 14px 22px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
     }
 
     .auth-text {
-      font-size: 9.5pt;
+      font-size: 9pt;
       line-height: 1.5;
       font-weight: 700;
       color: rgba(255,255,255,0.78);
       border-left: 3px solid #c61f2c;
-      padding-left: 12px;
+      padding-left: 11px;
     }
 
-    /* ── Footer ──────────────────────────────────────────────── */
+    /* ── 6. Footer  0.46in ───────────────────────────────────── */
     .footer {
-      flex: 0 0 0.52in;
+      flex: 0 0 0.46in;
       background: #0d1d4d;
       border-top: 3px solid rgba(201,171,75,0.35);
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 26px;
-      padding: 0 24px;
+      gap: 22px;
+      padding: 0 20px;
+      overflow: hidden;
     }
+
+    /* Total fixed: 0.12+0.92+2.62+0.98+0.46 = 5.10in  Body gets 5.90in */
 
     .footer-chip {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 9pt;
+      gap: 7px;
+      font-size: 8.5pt;
       font-weight: 900;
-      letter-spacing: .10em;
+      letter-spacing: .09em;
       text-transform: uppercase;
       color: #ffffff;
     }
@@ -369,7 +374,7 @@
         margin: 0;
         background: #ffffff;
       }
-      .flyer  { margin: 0; box-shadow: none; }
+      .flyer     { margin: 0; box-shadow: none; }
       .print-btn { display: none !important; }
     }
   </style>
@@ -378,10 +383,10 @@
 
 <div class="flyer">
 
-  <!-- Top stripe -->
+  <!-- 1. Top stripe -->
   <div class="top-stripe"></div>
 
-  <!-- Header -->
+  <!-- 2. Header -->
   <header class="header">
     <div class="header-left">MIAMI BEACH<br>FIRE DEPARTMENT</div>
     <div class="header-divider"></div>
@@ -391,7 +396,7 @@
     </div>
   </header>
 
-  <!-- Hero -->
+  <!-- 3. Hero -->
   <section class="hero">
     <div class="logo-wrap">
       <img
@@ -404,13 +409,13 @@
       <div class="kicker">For every member of this department</div>
       <h1 class="headline">YOU ARE<br>NOT ALONE.</h1>
       <div class="hero-subtext">
-        If a call is staying with you &mdash; trained peers are ready to listen.
+        If a call is staying with you, trained peers are ready to listen.
         Confidential. No judgment. No report.
       </div>
     </div>
   </section>
 
-  <!-- Body -->
+  <!-- 4. Body -->
   <section class="body-section">
 
     <!-- QR column -->
@@ -419,54 +424,54 @@
       <div class="qr-box">
         <img
           src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=https%3A%2F%2Fmbfdpeer.github.io%2FMBPeerAPP%2F&bgcolor=FFFFFF&color=132d6e&ecc=H&margin=10"
-          alt="QR Code — MBFD CISM Peer Support"
+          alt="QR Code - MBFD CISM Peer Support"
         />
       </div>
       <div class="qr-caption">
-        Access the full peer support team,<br>resources &amp; clinician directory<br>from your phone
+        Access the full peer support team,<br>resources and clinician directory<br>from your phone
       </div>
     </div>
 
     <!-- Contacts column -->
     <div class="contact-column">
 
-      <div class="contact-title">Direct contacts &mdash; available 24 / 7</div>
+      <div class="contact-title">Direct contacts - available 24 / 7</div>
 
       <div class="contact-card red">
         <div class="contact-label">MBFD Peer Support Line</div>
         <div class="contact-number">305-796-5355</div>
-        <div class="contact-note">&#128222; Call anytime &mdash; direct peer support</div>
+        <div class="contact-note">&#128222; Call anytime - direct peer support</div>
       </div>
 
       <div class="contact-card">
-        <div class="contact-label">Suicide &amp; Crisis Lifeline</div>
+        <div class="contact-label">Suicide and Crisis Lifeline</div>
         <div class="contact-number">988</div>
-        <div class="contact-note">&#128222; Call or Text 988 &mdash; 24 / 7 nationwide</div>
+        <div class="contact-note">&#128222; Call or Text 988 - 24/7 nationwide</div>
       </div>
 
       <div class="contact-card red">
         <div class="contact-label">Employee Assistance Program (EAP)</div>
         <div class="contact-number small">1-877-622-4327</div>
-        <div class="contact-note">Confidential counseling &mdash; City of Miami Beach employees &amp; household members</div>
+        <div class="contact-note">Confidential counseling - City of Miami Beach employees and household members</div>
       </div>
 
       <div class="contact-card">
         <div class="contact-label">K9 Therapy Support</div>
         <div class="contact-number small">305-479-0525</div>
-        <div class="contact-note">&#128054; Samantha &mdash; canine therapy support</div>
+        <div class="contact-note">&#128054; Samantha - canine therapy support</div>
       </div>
 
     </div>
 
   </section>
 
-  <!-- App + Auth bar -->
+  <!-- 5. App + Auth bar -->
   <section class="app-auth">
     <div class="app-box">
-      <div class="app-title">What&rsquo;s in the app</div>
+      <div class="app-title">What is in the app</div>
       <ul class="app-list">
         <li>Full peer support team with direct call buttons</li>
-        <li>Chaplain support &mdash; Father Roberto Cid &amp; Erica Sommer</li>
+        <li>Chaplain support - Father Roberto Cid and Erica Sommer</li>
         <li>45+ licensed clinicians across SE Florida</li>
         <li>First Responder specialty programs</li>
         <li>Online mental health resources</li>
@@ -480,11 +485,11 @@
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- 6. Footer -->
   <footer class="footer">
     <div class="footer-chip">Confidential</div>
     <div class="footer-chip">Peer-Based</div>
-    <div class="footer-chip">Available 24 / 7</div>
+    <div class="footer-chip">Available 24/7</div>
     <div class="footer-chip">No Judgment</div>
   </footer>
 
