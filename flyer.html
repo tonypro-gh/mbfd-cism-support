@@ -17,6 +17,14 @@
       box-sizing: border-box;
       -webkit-print-color-adjust: exact !important;
       print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+
+    html {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      forced-color-adjust: none !important;
     }
 
     html, body {
@@ -495,6 +503,9 @@
 
 </div>
 
+<div style="width:8.5in;margin:10px auto 4px;background:#c61f2c;color:#fff;font-family:'Montserrat',Arial,sans-serif;font-size:11px;font-weight:900;letter-spacing:.10em;text-transform:uppercase;padding:10px 20px;text-align:center;">
+  &#9888; To print in color: Ctrl+P (Win) or Cmd+P (Mac) &rarr; More settings &rarr; check <strong>BACKGROUND GRAPHICS</strong> &rarr; set Margins to None
+</div>
 <button class="print-btn" onclick="window.print()">&#128438; Print Station Flyer</button>
 
 </body>
