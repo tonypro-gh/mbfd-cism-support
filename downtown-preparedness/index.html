@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downtown Educational Preparedness Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --white: #FFFFFF;
+  --black: #000000;
+  --blue:  #008AFC;
+  --red:   #F50B0B;
+  --font-hero: 'Anton', Arial Black, sans-serif;
+  --font-label: Arial Black, Arial, sans-serif;
+  --font-body: 'Montserrat', Arial, sans-serif;
+  --nav-h: 56px;
+  --search-h: 48px;
+  --bar-h: 104px; /* nav + search */
+  --footer-h: 64px;
+  --transition: 150ms ease;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--font-body); border: none; background: none; }
+
+/* ===== STICKY TOP BAR ===== */
+#topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--black);
+}
+
+/* nav row */
+#navbar {
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  border-bottom: 2px solid var(--blue);
+}
+#nav-brand {
+  font-family: var(--font-hero);
+  font-size: 14px;
+  color: var(--blue);
+  letter-spacing: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+#nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+}
+#nav-links::-webkit-scrollbar { display: none; }
+.nav-group-label {
+  font-family: var(--font-label);
+  font-size: 8px;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 6px;
+  white-space: nowrap;
+  opacity: 0.7;
+}
+.nav-btn {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 4px 8px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+.nav-btn:hover { color: var(--blue); border-color: var(--blue); }
+.nav-btn.active { background: var(--blue); color: var(--white); border-color: var(--blue); }
+
+#hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px;
+  margin-left: auto;
+}
+#hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: transform var(--transition), opacity var(--transition);
+}
+#hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+#hamburger.open span:nth-child(2) { opacity: 0; }
+#hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+#nav-drawer {
+  display: none;
+  position: fixed;
+  top: var(--nav-h);
+  left: 0; right: 0;
+  background: var(--black);
+  border-bottom: 2px solid var(--blue);
+  z-index: 999;
+  max-height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+  padding: 8px 0 16px;
+}
+#nav-drawer.open { display: block; }
+.drawer-group-label {
+  font-family: var(--font-label);
+  font-size: 9px;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 12px 16px 4px;
+  opacity: 0.7;
+}
+.drawer-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+  padding: 10px 24px;
+  border-bottom: 1px solid #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.drawer-btn:hover { background: #111; color: var(--blue); }
+.drawer-btn.active { color: var(--blue); border-left: 3px solid var(--blue); }
+
+/* search row */
+#searchbar {
+  height: var(--search-h);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 8px;
+  background: #111;
+  border-bottom: 1px solid #222;
+}
+#search-input {
+  flex: 1;
+  height: 32px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 13px;
+  padding: 0 12px;
+  outline: none;
+  transition: border-color var(--transition);
+}
+#search-input:focus { border-color: var(--blue); }
+#search-input::placeholder { color: #555; }
+#search-clear {
+  color: #555;
+  font-size: 16px;
+  padding: 4px 8px;
+  display: none;
+}
+#search-clear.visible { display: block; color: var(--white); }
+#search-results {
+  position: absolute;
+  top: calc(var(--bar-h) - 2px);
+  left: 16px; right: 16px;
+  background: var(--black);
+  border: 1px solid var(--blue);
+  z-index: 998;
+  display: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+#search-results.open { display: block; }
+.search-item {
+  display: block;
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--white);
+  border-bottom: 1px solid #1a1a1a;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.search-item:hover { background: var(--blue); color: var(--white); }
+.search-item strong { color: var(--blue); }
+.search-item:hover strong { color: var(--white); }
+.search-none { padding: 12px 16px; font-size: 12px; color: #888; }
+
+/* ===== MAIN CONTENT ===== */
+#main {
+  margin-top: var(--bar-h);
+  margin-bottom: var(--footer-h);
+  flex: 1;
+}
+section.panel {
+  display: none;
+  min-height: calc(100vh - var(--bar-h) - var(--footer-h));
+  padding: 48px 24px 64px;
+  animation: fadeIn var(--transition) ease;
+}
+section.panel.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== FOOTER ===== */
+#site-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: var(--footer-h);
+  background: var(--black);
+  border-top: 2px solid var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  z-index: 900;
+}
+/* LOGO SWAP POINTS — replace <img> src with real file path when ready */
+.footer-logo-syt {
+  height: 36px;
+  width: auto;
+  display: block;
+  /* swap: <img src="logo-syt.png" alt="SYT.FYI"> */
+}
+.footer-logo-ft {
+  height: 36px;
+  width: auto;
+  display: block;
+  /* swap: <img src="logo-firetactic.png" alt="FireTactic"> */
+}
+.footer-tagline {
+  font-family: var(--font-label);
+  font-size: 9px;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+  flex: 1;
+  padding: 0 8px;
+}
+
+/* ===== REUSABLE COMPONENTS ===== */
+.container { max-width: 1100px; margin: 0 auto; }
+
+.section-tag {
+  font-family: var(--font-label);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+h1.hero {
+  font-family: var(--font-hero);
+  font-size: clamp(2rem, 6vw, 5rem);
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 24px;
+}
+h2.section-title {
+  font-family: var(--font-hero);
+  font-size: clamp(1.5rem, 4vw, 2.8rem);
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+h3.card-title {
+  font-family: var(--font-label);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+p.body { font-size: 15px; line-height: 1.7; margin-bottom: 16px; }
+p.lead { font-size: 17px; font-weight: 600; line-height: 1.6; margin-bottom: 20px; }
+
+.divider {
+  height: 3px;
+  background: var(--blue);
+  margin: 32px 0;
+}
+.divider-sm {
+  height: 2px;
+  background: var(--black);
+  margin: 20px 0;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+.card {
+  border: 2px solid var(--black);
+  padding: 20px;
+  background: var(--white);
+}
+.card.blue { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.card.black { background: var(--black); color: var(--white); border-color: var(--black); }
+.card.red { background: var(--red); color: var(--white); border-color: var(--red); }
+.card p { font-size: 13px; line-height: 1.5; margin-top: 6px; }
+
+/* Color blocks */
+.block-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 32px 0;
+}
+.block {
+  padding: 20px 28px;
+  font-family: var(--font-hero);
+  font-size: clamp(1.4rem, 4vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.block.blue { background: var(--blue); color: var(--white); }
+.block.red { background: var(--red); color: var(--white); }
+.block.black { background: var(--black); color: var(--white); }
+
+/* Checklist */
+.checklist { list-style: none; margin-top: 16px; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  font-weight: 500;
+}
+.checklist li::before {
+  content: '▶';
+  color: var(--blue);
+  font-size: 10px;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* Timeline */
+.timeline { margin-top: 32px; position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--blue);
+}
+.timeline-step {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding-left: 8px;
+  position: relative;
+}
+.step-num {
+  width: 36px;
+  height: 36px;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-hero);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid var(--blue);
+  z-index: 1;
+}
+.step-content h4 {
+  font-family: var(--font-label);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.step-content p { font-size: 13px; color: #444; line-height: 1.5; }
+
+/* Accordion (FAQ) */
+.accordion { margin-top: 16px; }
+.accordion-item { border: 2px solid var(--black); margin-bottom: 4px; }
+.accordion-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background var(--transition), color var(--transition);
+}
+.accordion-btn:hover { background: var(--black); color: var(--white); }
+.accordion-btn.open { background: var(--blue); color: var(--white); }
+.accordion-arrow { font-size: 12px; transition: transform var(--transition); }
+.accordion-btn.open .accordion-arrow { transform: rotate(180deg); }
+.accordion-body {
+  display: none;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+.accordion-body.open { display: block; }
+
+/* Number steps */
+.num-steps { margin-top: 24px; }
+.num-step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--blue);
+  padding: 12px 16px;
+  background: #f8f8f8;
+}
+.num-step .num {
+  font-family: var(--font-hero);
+  font-size: 2rem;
+  color: var(--blue);
+  line-height: 1;
+  min-width: 40px;
+}
+.num-step h4 {
+  font-family: var(--font-label);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.num-step p { font-size: 13px; line-height: 1.5; }
+
+/* Banner */
+.banner {
+  padding: 18px 24px;
+  font-family: var(--font-label);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid var(--black);
+  margin: 24px 0;
+}
+.banner.blue { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.banner.black { background: var(--black); color: var(--white); }
+.banner.red { background: var(--red); color: var(--white); border-color: var(--red); }
+
+/* Photo placeholder */
+.photo-placeholder {
+  background: #e8e8e8;
+  border: 2px dashed #bbb;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 12px;
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  padding: 24px;
+  gap: 8px;
+}
+.photo-placeholder .icon { font-size: 32px; }
+
+/* Fictional example styles */
+.fictional-badge {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--font-label);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 4px 12px;
+  margin-bottom: 20px;
+}
+
+/* Two-col layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Info table */
+.info-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.info-table td {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  vertical-align: top;
+}
+.info-table td:first-child {
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f0f0f0;
+  width: 35%;
+  font-weight: 700;
+}
+
+/* Summer timeline */
+.summer-bar {
+  display: flex;
+  margin-top: 24px;
+  border: 2px solid var(--black);
+  overflow: hidden;
+}
+.summer-phase {
+  flex: 1;
+  padding: 16px 10px;
+  text-align: center;
+  border-right: 2px solid var(--black);
+}
+.summer-phase:last-child { border-right: none; }
+.summer-phase.blue { background: var(--blue); color: var(--white); }
+.summer-phase.black { background: var(--black); color: var(--white); }
+.summer-phase .month {
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  opacity: 0.8;
+}
+.summer-phase .phase-name {
+  font-family: var(--font-hero);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+@media (max-width: 600px) { .summer-bar { flex-direction: column; } .summer-phase { border-right: none; border-bottom: 2px solid var(--black); } }
+
+/* Flow diagram */
+.flow-diagram { margin-top: 32px; }
+.flow-box {
+  border: 2px solid var(--black);
+  padding: 14px 20px;
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: var(--white);
+  margin: 0 auto 4px;
+  max-width: 280px;
+}
+.flow-box.blue { background: var(--blue); color: var(--white); border-color: var(--blue); }
+.flow-box.black { background: var(--black); color: var(--white); }
+.flow-arrow { text-align: center; font-size: 20px; color: var(--blue); line-height: 1.2; margin: 4px 0; }
+.flow-branches {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+.flow-branch {
+  border: 2px solid var(--black);
+  padding: 12px 16px;
+  text-align: center;
+  font-family: var(--font-label);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  min-width: 120px;
+}
+
+/* Closing statement */
+.closing-statement {
+  font-family: var(--font-hero);
+  font-size: clamp(1.4rem, 4vw, 2.4rem);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 40px 24px;
+  background: var(--black);
+  color: var(--white);
+  margin-top: 40px;
+  letter-spacing: 2px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  #nav-links { display: none; }
+  #hamburger { display: flex; }
+  .card-grid { grid-template-columns: 1fr 1fr; }
+  section.panel { padding: 32px 16px 72px; }
+  .footer-tagline { font-size: 7px; }
+}
+@media (max-width: 480px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .footer-tagline { display: none; }
+}
+@media (min-width: 1100px) {
+  .card-grid { grid-template-columns: repeat(4, 1fr); }
+  section.panel { padding: 56px 48px 80px; }
+}
+
+/* ===== PRINT ===== */
+@media print {
+  #topbar, #site-footer, #nav-drawer { display: none !important; }
+  #main { margin: 0; }
+  section.panel { display: none !important; padding: 0; }
+  section.panel.active { display: block !important; min-height: auto; }
+  .accordion-body { display: block !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+/* ===== SVG HUB/SPOKE (Ecosystem) ===== */
+#ecosystem-svg { width: 100%; max-width: 640px; display: block; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div id="topbar">
+  <nav id="navbar">
+    <span id="nav-brand">DEPI</span>
+    <div id="nav-links">
+      <!-- GROUP: Initiative -->
+      <span class="nav-group-label">Initiative</span>
+      <button class="nav-btn" data-section="home">Home</button>
+      <button class="nav-btn" data-section="about">About Tony</button>
+      <button class="nav-btn" data-section="overview">Overview</button>
+      <button class="nav-btn" data-section="why-edu">Why Edu Facilities</button>
+      <button class="nav-btn" data-section="why-downtown">Why Downtown</button>
+      <button class="nav-btn" data-section="ecosystem">Ecosystem</button>
+      <button class="nav-btn" data-section="challenges">Challenges</button>
+      <!-- GROUP: Programs -->
+      <span class="nav-group-label">Programs</span>
+      <button class="nav-btn" data-section="pilot">Pilot Program</button>
+      <button class="nav-btn" data-section="pilot-benefits">Pilot Benefits</button>
+      <!-- GROUP: Platforms -->
+      <span class="nav-group-label">Platforms</span>
+      <button class="nav-btn" data-section="syt360">SYT.360</button>
+      <button class="nav-btn" data-section="sytpro">SYT.PRO</button>
+      <button class="nav-btn" data-section="firetactic">FireTactic</button>
+      <!-- GROUP: Operations -->
+      <span class="nav-group-label">Operations</span>
+      <button class="nav-btn" data-section="school-example">School Example</button>
+      <button class="nav-btn" data-section="responder">Responder View</button>
+      <button class="nav-btn" data-section="school-police">School Police</button>
+      <button class="nav-btn" data-section="emergency">Emergency Planning</button>
+      <button class="nav-btn" data-section="resources">Prep Resources</button>
+      <!-- GROUP: Future -->
+      <span class="nav-group-label">Future</span>
+      <button class="nav-btn" data-section="summer">Summer</button>
+      <button class="nav-btn" data-section="digital-twin">Digital Twin</button>
+      <button class="nav-btn" data-section="overhead">Overhead Imagery</button>
+      <button class="nav-btn" data-section="grants">Grant Opportunities</button>
+      <!-- GROUP: Action -->
+      <span class="nav-group-label">Action</span>
+      <button class="nav-btn" data-section="faq">FAQ</button>
+      <button class="nav-btn" data-section="next-steps">Next Steps</button>
+      <button class="nav-btn" data-section="contact">Contact</button>
+    </div>
+    <button id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- search row -->
+  <div id="searchbar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input id="search-input" type="text" placeholder="Search sections… (school, pilot, fire rescue, responder…)" autocomplete="off">
+    <button id="search-clear" aria-label="Clear">&times;</button>
+  </div>
+  <div id="search-results"></div>
+</div>
+
+<!-- Mobile drawer -->
+<div id="nav-drawer">
+  <div class="drawer-group-label">Initiative</div>
+  <button class="drawer-btn" data-section="home">Home</button>
+  <button class="drawer-btn" data-section="about">About Tony</button>
+  <button class="drawer-btn" data-section="overview">Initiative Overview</button>
+  <button class="drawer-btn" data-section="why-edu">Why Educational Facilities</button>
+  <button class="drawer-btn" data-section="why-downtown">Why Downtown Miami</button>
+  <button class="drawer-btn" data-section="ecosystem">Educational Ecosystem</button>
+  <button class="drawer-btn" data-section="challenges">Current Challenges</button>
+  <div class="drawer-group-label">Programs</div>
+  <button class="drawer-btn" data-section="pilot">Pilot Program</button>
+  <button class="drawer-btn" data-section="pilot-benefits">Pilot School Benefits</button>
+  <div class="drawer-group-label">Platforms</div>
+  <button class="drawer-btn" data-section="syt360">SYT.360</button>
+  <button class="drawer-btn" data-section="sytpro">SYT.PRO</button>
+  <button class="drawer-btn" data-section="firetactic">FireTactic</button>
+  <div class="drawer-group-label">Operations</div>
+  <button class="drawer-btn" data-section="school-example">School Example</button>
+  <button class="drawer-btn" data-section="responder">Responder View</button>
+  <button class="drawer-btn" data-section="school-police">School Police View</button>
+  <button class="drawer-btn" data-section="emergency">Emergency Planning</button>
+  <button class="drawer-btn" data-section="resources">Preparedness Resources</button>
+  <div class="drawer-group-label">Future</div>
+  <button class="drawer-btn" data-section="summer">Summer Opportunity</button>
+  <button class="drawer-btn" data-section="digital-twin">Digital Twin</button>
+  <button class="drawer-btn" data-section="overhead">Overhead Imagery</button>
+  <button class="drawer-btn" data-section="grants">Grant Opportunities</button>
+  <div class="drawer-group-label">Action</div>
+  <button class="drawer-btn" data-section="faq">FAQ</button>
+  <button class="drawer-btn" data-section="next-steps">Next Steps</button>
+  <button class="drawer-btn" data-section="contact">Contact</button>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main id="main">
+
+<!-- ==================== SECTION 1: HOME ==================== -->
+<section class="panel" id="sec-home">
+<div class="container">
+  <div class="section-tag">Downtown Educational Preparedness Initiative</div>
+  <h1 class="hero">Downtown Educational<br>Preparedness Initiative</h1>
+  <p class="lead">Create a repeatable preparedness framework that improves operational awareness, facility familiarization, emergency planning, and responder coordination before emergencies occur.</p>
+  <div class="divider"></div>
+  <div class="block-row">
+    <div class="block blue">One Source of Truth</div>
+    <div class="block red">Two Perspectives</div>
+    <div class="block black">Safer Outcomes</div>
+  </div>
+  <div class="divider"></div>
+  <!-- Connected nodes visual -->
+  <h3 class="card-title" style="margin-bottom:20px;">A Collaborative Network</h3>
+  <div style="overflow-x:auto;">
+  <svg viewBox="0 0 620 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:620px;display:block;margin:0 auto;" aria-label="Stakeholder network diagram">
+    <!-- lines -->
+    <line x1="310" y1="130" x2="110" y2="60"  stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <line x1="310" y1="130" x2="510" y2="60"  stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <line x1="310" y1="130" x2="80"  y2="190" stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <line x1="310" y1="130" x2="540" y2="190" stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <line x1="310" y1="130" x2="200" y2="230" stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <line x1="310" y1="130" x2="420" y2="230" stroke="#008AFC" stroke-width="1.5" opacity="0.5"/>
+    <!-- center -->
+    <rect x="245" y="105" width="130" height="50" fill="#000"/>
+    <text x="310" y="127" text-anchor="middle" fill="#008AFC" font-family="Arial Black" font-size="9" font-weight="700" letter-spacing="1">PREPAREDNESS</text>
+    <text x="310" y="143" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9" font-weight="700" letter-spacing="1">INITIATIVE</text>
+    <!-- nodes -->
+    <rect x="55"  y="38"  width="110" height="34" fill="#F50B0B"/><text x="110" y="58"  text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">SCHOOL ADMIN</text>
+    <rect x="455" y="38"  width="110" height="34" fill="#008AFC"/><text x="510" y="58"  text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">SCHOOL POLICE</text>
+    <rect x="20"  y="170" width="120" height="34" fill="#000"/><text x="80"  y="190" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">FIRE RESCUE</text>
+    <rect x="478" y="170" width="100" height="34" fill="#000"/><text x="528" y="190" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">EMS</text>
+    <rect x="140" y="213" width="120" height="34" fill="#008AFC"/><text x="200" y="234" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">LAW ENFORCE.</text>
+    <rect x="358" y="213" width="104" height="34" fill="#F50B0B"/><text x="410" y="234" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">FACILITIES</text>
+  </svg>
+  </div>
+  <div class="banner blue" style="margin-top:32px;text-align:center;font-size:13px;">
+    We can start with one school — evaluate the process — learn from it — and determine what comes next.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 2: ABOUT TONY ==================== -->
+<section class="panel" id="sec-about">
+<div class="container">
+  <div class="section-tag">About the Presenter</div>
+  <h2 class="section-title">About Tony Prol</h2>
+  <div class="two-col">
+    <div>
+      <!-- LOGO SWAP: replace div with <img src="tony-photo.jpg" alt="Tony Prol" style="width:100%;border:2px solid #000;"> -->
+      <div class="photo-placeholder" style="height:280px;">
+        <span class="icon">👤</span>
+        <span>Photo — Tony Prol</span>
+        <span style="font-size:10px;color:#aaa;">Swap: &lt;img src="tony-photo.jpg"&gt;</span>
+      </div>
+    </div>
+    <div>
+      <h3 class="card-title" style="color:var(--blue);font-size:18px;">Tony Prol</h3>
+      <div class="divider-sm"></div>
+      <table class="info-table">
+        <tr><td>Title</td><td>Miami Beach Firefighter / Paramedic</td></tr>
+        <tr><td>Company</td><td>Founder &amp; CEO — SYT.FYI</td></tr>
+        <tr><td>Foundation</td><td>President &amp; Executive Director — First In Safety Foundation</td></tr>
+        <tr><td>Location</td><td>Downtown Miami Office</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <h3 class="card-title">Focus Areas</h3>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(160px,1fr));">
+    <div class="card blue"><h3 class="card-title">Preparedness</h3><p>Building proactive preparedness frameworks before emergencies occur.</p></div>
+    <div class="card black"><h3 class="card-title">Responder Coordination</h3><p>Improving how responders access and share critical facility information.</p></div>
+    <div class="card"><h3 class="card-title">Operational Awareness</h3><p>Ensuring all stakeholders share a single source of truth.</p></div>
+    <div class="card"><h3 class="card-title">Educational Facilities</h3><p>Specialized focus on schools, colleges, and universities.</p></div>
+    <div class="card blue"><h3 class="card-title">Community Safety</h3><p>Partnerships that serve the whole community — not just one agency.</p></div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    This initiative is about preparedness and partnership — not technology. Technology is a tool, not the goal.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 3: INITIATIVE OVERVIEW ==================== -->
+<section class="panel" id="sec-overview">
+<div class="container">
+  <div class="section-tag">What We Are Building</div>
+  <h2 class="section-title">Initiative Overview</h2>
+  <p class="lead">This initiative starts with educational facilities in Downtown Miami and Brickell — evaluating preparedness, improving facility familiarization, strengthening responder awareness, and documenting lessons learned.</p>
+  <div class="divider"></div>
+  <h3 class="card-title">Objective</h3>
+  <p class="body">Build a repeatable preparedness framework that any educational institution — from a single charter school to a large university — can evaluate, adopt, and scale through genuine partnership with public safety agencies.</p>
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-top:32px;">
+    <div class="card black" style="text-align:center;">
+      <div style="font-family:var(--font-hero);font-size:3rem;color:var(--blue);">01</div>
+      <h3 class="card-title" style="color:var(--white);">Scalable</h3>
+      <p style="color:#ccc;">A framework built to grow — from one school to an entire district.</p>
+    </div>
+    <div class="card blue" style="text-align:center;">
+      <div style="font-family:var(--font-hero);font-size:3rem;color:var(--white);">02</div>
+      <h3 class="card-title">Collaborative</h3>
+      <p>Built in partnership with schools, public safety, and the broader community.</p>
+    </div>
+    <div class="card" style="text-align:center;border:2px solid var(--black);">
+      <div style="font-family:var(--font-hero);font-size:3rem;color:var(--red);">03</div>
+      <h3 class="card-title">Starts With One School</h3>
+      <p>No pressure, no commitment. One visit, one evaluation, one set of lessons learned.</p>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="banner blue">
+    We evaluate. We learn. We document. We decide together what comes next.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 4: WHY EDUCATIONAL FACILITIES ==================== -->
+<section class="panel" id="sec-why-edu">
+<div class="container">
+  <div class="section-tag">The Case for Educational Facilities</div>
+  <h2 class="section-title">Why Educational Facilities</h2>
+  <div class="banner black">
+    Educational facilities present unique preparedness, occupancy, reunification, and responder coordination challenges that require dedicated planning and collaboration.
+  </div>
+  <div class="card-grid" style="margin-top:32px;">
+    <div class="card blue"><h3 class="card-title">K-12 Schools</h3><p>High-density populations, complex ingress/egress, reunification requirements, and regular occupancy changes.</p></div>
+    <div class="card"><h3 class="card-title">Charter Schools</h3><p>Independent governance structures often operate with limited preparedness infrastructure and staff turnover.</p></div>
+    <div class="card black"><h3 class="card-title">Private Schools</h3><p>Varied facilities, independent safety programs, and limited direct coordination with public safety agencies.</p></div>
+    <div class="card blue"><h3 class="card-title">Colleges</h3><p>Open campuses, adult populations, multiple buildings, and complex multi-agency coordination needs.</p></div>
+    <div class="card"><h3 class="card-title">Universities</h3><p>Large footprints, residential populations, research facilities, and hospital/clinic adjacencies.</p></div>
+    <div class="card black"><h3 class="card-title">Trade Schools</h3><p>Industrial equipment, specialized hazards, and populations unfamiliar with emergency procedures.</p></div>
+  </div>
+  <div class="divider"></div>
+  <h3 class="card-title">Why This Matters</h3>
+  <ul class="checklist">
+    <li>Staff turnover disrupts institutional knowledge every year</li>
+    <li>Responding agencies may have outdated or no facility information</li>
+    <li>Reunification and assembly area documentation is often inconsistent</li>
+    <li>Emergency contacts change and rarely reach the right responder in time</li>
+    <li>Multiple agencies respond but rarely share a single information source</li>
+  </ul>
+</div>
+</section>
+
+<!-- ==================== SECTION 5: WHY DOWNTOWN MIAMI ==================== -->
+<section class="panel" id="sec-why-downtown">
+<div class="container">
+  <div class="section-tag">The Pilot Geography</div>
+  <h2 class="section-title">Why Downtown Miami</h2>
+  <p class="lead">Downtown Miami and Brickell offer an ideal environment to evaluate a preparedness initiative: concentrated institutions, multiple public safety agencies, and a walkable geography that creates a natural feedback loop.</p>
+  <div class="divider"></div>
+  <div class="card-grid">
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">01</h3><h3 class="card-title" style="color:var(--white);">Dense Urban Environment</h3><p style="color:#ccc;">High building concentration means responder familiarization is critical.</p></div>
+    <div class="card blue"><h3 class="card-title">02</h3><h3 class="card-title">High Building Concentration</h3><p>Multiple educational facilities within a compact, navigable area.</p></div>
+    <div class="card"><h3 class="card-title">03</h3><h3 class="card-title">Multiple Educational Institutions</h3><p>MDCPS schools, charter schools, MDC, FIU, and private institutions all within proximity.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">04</h3><h3 class="card-title" style="color:var(--white);">Shared Public Safety Resources</h3><p style="color:#ccc;">Fire, EMS, law enforcement, and school police all serve the same zone.</p></div>
+    <div class="card blue"><h3 class="card-title">05</h3><h3 class="card-title">Walkable Ecosystem</h3><p>Proximity allows for in-person evaluation, relationship-building, and rapid iteration.</p></div>
+    <div class="card"><h3 class="card-title">06</h3><h3 class="card-title">Local Support Presence</h3><p>Tony's Downtown Miami office provides direct, on-the-ground coordination.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">07</h3><h3 class="card-title" style="color:var(--white);">Fast Feedback Loop</h3><p style="color:#ccc;">Compact geography accelerates learning, documentation, and evaluation.</p></div>
+    <div class="card blue"><h3 class="card-title">08</h3><h3 class="card-title">Scalable Pilot Zone</h3><p>Lessons learned here can be replicated to any urban or suburban district.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 6: EDUCATIONAL ECOSYSTEM ==================== -->
+<section class="panel" id="sec-ecosystem">
+<div class="container">
+  <div class="section-tag">The Network</div>
+  <h2 class="section-title">Educational Ecosystem</h2>
+  <p class="lead">The initiative is designed to serve the full spectrum of educational institutions in the Downtown Miami area — starting with one partner, growing through trust and demonstrated value.</p>
+  <div class="divider"></div>
+
+  <!-- Hub-and-spoke SVG -->
+  <svg id="ecosystem-svg" viewBox="0 0 640 360" xmlns="http://www.w3.org/2000/svg" aria-label="Educational ecosystem hub and spoke diagram">
+    <!-- spokes -->
+    <line x1="320" y1="180" x2="130" y2="60"  stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="510" y2="60"  stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="80"  y2="200" stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="560" y2="200" stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="160" y2="310" stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="480" y2="310" stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <line x1="320" y1="180" x2="320" y2="330" stroke="#008AFC" stroke-width="1.5" opacity="0.6"/>
+    <!-- center hub -->
+    <rect x="215" y="148" width="210" height="64" fill="#000"/>
+    <text x="320" y="170" text-anchor="middle" fill="#008AFC" font-family="Arial Black" font-size="9" letter-spacing="1.5">DOWNTOWN EDUCATIONAL</text>
+    <text x="320" y="184" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9" letter-spacing="1.5">PREPAREDNESS INITIATIVE</text>
+    <text x="320" y="200" text-anchor="middle" fill="#F50B0B" font-family="Arial Black" font-size="8" letter-spacing="1">DOWNTOWN MIAMI · BRICKELL</text>
+    <!-- spoke nodes — hover via CSS class -->
+    <g class="eco-node" data-label="MDCPS">
+      <rect x="60"  y="38"  width="140" height="36" fill="#008AFC"/>
+      <text x="130" y="60" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="10">MDCPS</text>
+    </g>
+    <g class="eco-node" data-label="Academica">
+      <rect x="440" y="38"  width="140" height="36" fill="#F50B0B"/>
+      <text x="510" y="60" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="10">ACADEMICA</text>
+    </g>
+    <g class="eco-node" data-label="Charter Schools">
+      <rect x="10"  y="178" width="140" height="36" fill="#000"/>
+      <text x="80"  y="200" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">CHARTER SCHOOLS</text>
+    </g>
+    <g class="eco-node" data-label="Miami Dade College">
+      <rect x="490" y="178" width="140" height="36" fill="#000"/>
+      <text x="560" y="196" text-anchor="middle" fill="#008AFC" font-family="Arial Black" font-size="9">MIAMI DADE</text>
+      <text x="560" y="208" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">COLLEGE</text>
+    </g>
+    <g class="eco-node" data-label="FIU">
+      <rect x="90"  y="290" width="140" height="36" fill="#008AFC"/>
+      <text x="160" y="312" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="10">FIU</text>
+    </g>
+    <g class="eco-node" data-label="Private Schools">
+      <rect x="410" y="290" width="140" height="36" fill="#F50B0B"/>
+      <text x="480" y="312" text-anchor="middle" fill="#FFF" font-family="Arial Black" font-size="9">PRIVATE SCHOOLS</text>
+    </g>
+    <g class="eco-node" data-label="Future Partners">
+      <rect x="245" y="318" width="150" height="30" fill="#222"/>
+      <text x="320" y="337" text-anchor="middle" fill="#888" font-family="Arial Black" font-size="8">FUTURE PARTNERS</text>
+    </g>
+  </svg>
+
+  <div class="banner blue" style="text-align:center;margin-top:24px;">
+    Starting With One School. Growing Through Partnership.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 7: CURRENT CHALLENGES ==================== -->
+<section class="panel" id="sec-challenges">
+<div class="container">
+  <div class="section-tag">The Problem We Are Solving</div>
+  <h2 class="section-title">Current Challenges</h2>
+  <p class="lead">Before we can improve preparedness, we need to understand the barriers that exist today across educational facilities and the agencies that serve them.</p>
+  <div class="card-grid">
+    <div class="card red"><h3 class="card-title">Information Silos</h3><p>Critical facility data exists in isolation — one agency can't see what another knows.</p></div>
+    <div class="card black"><h3 class="card-title">Multiple Documents</h3><p>Emergency plans live in binders, shared drives, email threads, and outdated PDFs — no single source.</p></div>
+    <div class="card"><h3 class="card-title">Facility Familiarization</h3><p>Responding units often have never been inside the building they're responding to.</p></div>
+    <div class="card blue"><h3 class="card-title">Turnover</h3><p>Staff changes mean institutional knowledge walks out the door every year — along with safety context.</p></div>
+    <div class="card black"><h3 class="card-title">Emergency Access</h3><p>Gates, lock boxes, utility access, and entry points are often unknown until arrival on scene.</p></div>
+    <div class="card red"><h3 class="card-title">Building Complexity</h3><p>Multi-story, multi-wing, multi-building campuses create confusion under time pressure.</p></div>
+    <div class="card"><h3 class="card-title">Responder Awareness</h3><p>AED locations, assembly areas, reunification zones — not documented or not accessible in the field.</p></div>
+    <div class="card blue"><h3 class="card-title">Coordination Challenges</h3><p>Multiple responding agencies arrive with different information, creating confusion and gaps.</p></div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    These are not hypothetical problems. They are documented, real, and addressable through preparedness.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 8: PILOT PROGRAM ==================== -->
+<section class="panel" id="sec-pilot">
+<div class="container">
+  <div class="section-tag">The Approach</div>
+  <h2 class="section-title">Pilot Program</h2>
+  <p class="lead">The pilot is designed to be low-risk, high-value, and educational for every participant. It starts with one school and one visit.</p>
+  <div class="divider"></div>
+  <div class="timeline">
+    <div class="timeline-step">
+      <div class="step-num">1</div>
+      <div class="step-content"><h4>School Selection</h4><p>Identify one willing educational institution in Downtown Miami or Brickell to serve as the pilot partner.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">2</div>
+      <div class="step-content"><h4>SYT.360 Visit</h4><p>Conduct a no-cost, on-site preparedness visit to document the facility, contacts, utilities, and critical information.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">3</div>
+      <div class="step-content"><h4>Preparedness Review</h4><p>Review existing emergency plans, identify gaps, and document the current state of preparedness.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">4</div>
+      <div class="step-content"><h4>School Profile</h4><p>Build a complete operational profile of the facility — accessible to the school and approved downstream partners.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">5</div>
+      <div class="step-content"><h4>Responder Familiarization</h4><p>Share relevant facility information with verified responders — Fire Rescue, EMS, Law Enforcement, School Police.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">6</div>
+      <div class="step-content"><h4>Lessons Learned</h4><p>Document what worked, what didn't, and what all parties learned from the process.</p></div>
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">7</div>
+      <div class="step-content"><h4>Expansion Evaluation</h4><p>Based on feedback from all partners, jointly determine whether and how to expand the initiative.</p></div>
+    </div>
+  </div>
+  <div class="closing-statement">It starts with one school.</div>
+</div>
+</section>
+
+<!-- ==================== SECTION 9: PILOT BENEFITS ==================== -->
+<section class="panel" id="sec-pilot-benefits">
+<div class="container">
+  <div class="section-tag">What the Pilot School Receives</div>
+  <h2 class="section-title">Pilot School Benefits</h2>
+  <div class="banner blue">At no cost to the school. No commitment beyond participation. No obligation beyond honesty.</div>
+  <ul class="checklist" style="margin-top:24px;">
+    <li><strong>SYT.360 Visit</strong> — A professional on-site preparedness visit conducted by Tony Prol</li>
+    <li><strong>Preparedness Review</strong> — A documented review of the school's current preparedness posture</li>
+    <li><strong>School Operational Profile</strong> — A complete, structured facility profile for internal and responder use</li>
+    <li><strong>Emergency Planning Support</strong> — Resources and guidance to improve existing emergency plans</li>
+    <li><strong>Overhead Documentation</strong> — Aerial imagery and documentation of the school site</li>
+    <li><strong>Responder Familiarization</strong> — Approved facility information delivered to verified responding agencies</li>
+    <li><strong>School Police Familiarization</strong> — Dedicated familiarization session with School Police personnel</li>
+    <li><strong>Two-Year SYT.PRO Access</strong> — Full platform access for evaluation and feedback purposes</li>
+    <li><strong>Lessons Learned Report</strong> — A formal written report documenting findings and recommendations</li>
+  </ul>
+  <div class="banner black" style="margin-top:32px;">
+    The pilot school's feedback shapes every future decision. Their experience is the roadmap.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 10: SYT.360 ==================== -->
+<section class="panel" id="sec-syt360">
+<div class="container">
+  <div class="section-tag">SYT.FYI</div>
+  <h2 class="section-title">SYT.360</h2>
+  <div class="banner blue" style="font-size:16px;padding:20px 24px;">No-Cost Preparedness Visit</div>
+  <p class="body" style="margin-top:20px;">The SYT.360 visit is a structured, on-site assessment conducted by a trained preparedness professional. It is not an inspection — it is a collaborative documentation process designed to capture what exists and identify what is missing.</p>
+  <div class="divider"></div>
+  <h3 class="card-title">What a SYT.360 Visit Covers</h3>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-top:20px;">
+    <div class="card"><h3 class="card-title">Facility Walkthrough</h3><p>Physical tour of the entire facility — every entrance, wing, and critical space.</p></div>
+    <div class="card blue"><h3 class="card-title">Emergency Contacts</h3><p>Key personnel, roles, and how to reach them — documented and current.</p></div>
+    <div class="card black"><h3 class="card-title">AED Documentation</h3><p>Location, model, and condition of every AED on campus.</p></div>
+    <div class="card"><h3 class="card-title">Utility Documentation</h3><p>Gas, electric, and water shutoff locations — clearly mapped and described.</p></div>
+    <div class="card blue"><h3 class="card-title">Assembly Areas</h3><p>Primary and alternate assembly zones — mapped and documented.</p></div>
+    <div class="card"><h3 class="card-title">Reunification Areas</h3><p>Student-parent reunification zones — aligned with existing plans or newly established.</p></div>
+    <div class="card black"><h3 class="card-title">Existing Plan Review</h3><p>Review of current emergency operations plans, evacuation procedures, and safety documents.</p></div>
+    <div class="card"><h3 class="card-title">Floor Plans</h3><p>Documentation of available floor plans and identification of gaps.</p></div>
+    <div class="card blue"><h3 class="card-title">Overhead Documentation</h3><p>Aerial imagery and site documentation of the school grounds and surroundings.</p></div>
+    <div class="card"><h3 class="card-title">School Profile</h3><p>Compilation of all gathered information into a structured, usable operational profile.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 11: SYT.PRO ==================== -->
+<section class="panel" id="sec-sytpro">
+<div class="container">
+  <div class="section-tag">SYT.FYI Platform</div>
+  <h2 class="section-title">SYT.PRO</h2>
+  <div class="banner blue" style="font-size:16px;padding:20px 24px;">Enhanced School Preparedness Platform</div>
+  <p class="body" style="margin-top:20px;">SYT.PRO is the school-facing platform where all preparedness information lives — organized, accessible, and controlled entirely by the school.</p>
+  <div class="divider"></div>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">School Dashboard</h3><p style="color:#ccc;">A centralized view of the school's preparedness posture — contacts, documents, and status at a glance.</p></div>
+    <div class="card"><h3 class="card-title">Document Repository</h3><p>A structured, searchable library of emergency plans, floor plans, and preparedness documents.</p></div>
+    <div class="card blue"><h3 class="card-title">Preparedness Resources</h3><p>Curated resources, templates, and guidance to help schools improve their preparedness programs.</p></div>
+    <div class="card"><h3 class="card-title">Operational Profile</h3><p>The school's complete facility and operational profile — maintained, current, and ready to share.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">Facility Information</h3><p style="color:#ccc;">AED locations, utilities, access points, assembly areas — all in one place.</p></div>
+    <div class="card blue"><h3 class="card-title">Emergency Planning Resources</h3><p>Tools and templates to support or improve the school's existing emergency operations plans.</p></div>
+    <div class="card"><h3 class="card-title">Responder Familiarization Support</h3><p>Manage what information is shared with which responding agencies — school controls access.</p></div>
+  </div>
+  <div class="banner red" style="margin-top:32px;">
+    Pilot schools receive two years of access for evaluation and feedback purposes.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 12: FIRETACTIC ==================== -->
+<section class="panel" id="sec-firetactic">
+<div class="container">
+  <div class="section-tag">First In Safety Foundation</div>
+  <h2 class="section-title">FireTactic</h2>
+  <div class="banner blue" style="font-size:14px;padding:16px 24px;">Verified Responder Platform — Operated by First In Safety Foundation</div>
+  <p class="body" style="margin-top:20px;">FireTactic is the responder-facing platform — purpose-built for public safety professionals who need reliable, pre-incident facility information when they need it most.</p>
+  <div class="divider"></div>
+  <div class="two-col">
+    <div>
+      <h3 class="card-title" style="color:var(--blue);">Who Uses FireTactic</h3>
+      <ul class="checklist" style="margin-top:12px;">
+        <li>School Police — campus-specific familiarization and coordination</li>
+        <li>Fire Rescue — pre-incident planning and structural awareness</li>
+        <li>EMS — access, AED locations, and critical contact information</li>
+        <li>Law Enforcement — tactical awareness and facility familiarity</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="card-title" style="color:var(--red);">Platform Capabilities</h3>
+      <ul class="checklist" style="margin-top:12px;">
+        <li>Pre-Incident Planning — document and distribute facility profiles</li>
+        <li>Training — use facility data for tabletop and field exercises</li>
+        <li>Familiarization — help responders know a building before they enter it</li>
+        <li>Responder Notes — agency-specific annotations and operational notes</li>
+        <li>Operational Awareness — shared, current, verified facility information</li>
+      </ul>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="card" style="border:2px solid var(--blue);text-align:center;padding:24px;">
+      <div style="font-family:var(--font-hero);font-size:2rem;color:var(--blue);">VERIFIED</div>
+      <p style="margin-top:8px;font-size:12px;">All users are identity-verified public safety professionals</p>
+    </div>
+    <div class="card" style="border:2px solid var(--red);text-align:center;padding:24px;">
+      <div style="font-family:var(--font-hero);font-size:2rem;color:var(--red);">CONTROLLED</div>
+      <p style="margin-top:8px;font-size:12px;">Schools decide what information is shared and with whom</p>
+    </div>
+    <div class="card black" style="text-align:center;padding:24px;">
+      <div style="font-family:var(--font-hero);font-size:2rem;color:var(--white);">CURRENT</div>
+      <p style="margin-top:8px;font-size:12px;color:#ccc;">Information is maintained and updated by the school</p>
+    </div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    First In Safety Foundation operates FireTactic as part of its mission to improve responder preparedness and community safety.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 13: SCHOOL EXAMPLE ==================== -->
+<section class="panel" id="sec-school-example">
+<div class="container">
+  <div class="fictional-badge">⚠ Fictional Example — For Illustration Purposes Only</div>
+  <div class="section-tag">What a School Profile Looks Like</div>
+  <h2 class="section-title">Brickell Bay Preparatory Academy</h2>
+  <p style="font-size:12px;color:#888;margin-bottom:24px;">This is a fictional school created to demonstrate the format of a real operational profile. All names, contacts, and details are invented.</p>
+
+  <div class="two-col">
+    <div>
+      <!-- SWAP: <img src="school-exterior.jpg" alt="School exterior photo"> -->
+      <div class="photo-placeholder" style="height:200px;">
+        <span class="icon">🏫</span>
+        <span>School Exterior Photo</span>
+        <span style="font-size:10px;color:#aaa;">Swap: &lt;img src="school-exterior.jpg"&gt;</span>
+      </div>
+    </div>
+    <div>
+      <!-- SWAP: <img src="school-aerial.jpg" alt="Aerial view of school"> -->
+      <div class="photo-placeholder" style="height:200px;">
+        <span class="icon">✈</span>
+        <span>Aerial / Overhead View</span>
+        <span style="font-size:10px;color:#aaa;">Swap: &lt;img src="school-aerial.jpg"&gt;</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="two-col">
+    <div>
+      <table class="info-table">
+        <tr><td>School Name</td><td>Brickell Bay Preparatory Academy <span style="color:var(--red);font-size:10px;">(FICTIONAL)</span></td></tr>
+        <tr><td>Address</td><td>100 Brickell Bay Drive, Miami, FL 33131 <span style="color:var(--red);font-size:10px;">(FICTIONAL)</span></td></tr>
+        <tr><td>Type</td><td>Charter School, Grades K-8</td></tr>
+        <tr><td>Enrollment</td><td>Approx. 420 students</td></tr>
+        <tr><td>Main Entrance</td><td>North side of building — Brickell Bay Dr. Buzzer access, security camera, lobby check-in.</td></tr>
+        <tr><td>Secondary Entrance</td><td>East side — staff badge access only. Loading dock on south side, chain-link gate.</td></tr>
+      </table>
+    </div>
+    <div>
+      <table class="info-table">
+        <tr><td>Assembly Area</td><td>Northwest parking lot — marked with yellow paint. Capacity: 500+.</td></tr>
+        <tr><td>Reunification</td><td>Southeast corner of adjacent park — parent/student reunification zone.</td></tr>
+        <tr><td>AED #1</td><td>Main lobby — left of reception desk, green cabinet</td></tr>
+        <tr><td>AED #2</td><td>2nd floor hallway — near Room 212, wall-mounted</td></tr>
+        <tr><td>AED #3</td><td>Gymnasium — east wall, near bleachers</td></tr>
+        <tr><td>Gas Shutoff</td><td>SE exterior mechanical room — orange valve, marked with sign</td></tr>
+        <tr><td>Electric</td><td>Basement utility room B1 — main panel labeled "MAIN"</td></tr>
+        <tr><td>Water</td><td>NE exterior — behind HVAC units, blue valve</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="two-col">
+    <div>
+      <h3 class="card-title">Emergency Contacts <span style="color:var(--red);font-size:10px;">(FICTIONAL)</span></h3>
+      <table class="info-table" style="margin-top:12px;">
+        <tr><td>Principal</td><td>Dr. Maria Sanchez — Principal</td></tr>
+        <tr><td>Asst. Principal</td><td>Mr. David Torres — Operations</td></tr>
+        <tr><td>Safety Coord.</td><td>Ms. Angela Rivera</td></tr>
+        <tr><td>Facilities</td><td>Mr. Carlos Gomez</td></tr>
+        <tr><td>After Hours</td><td>[Building Security — Placeholder]</td></tr>
+      </table>
+    </div>
+    <div>
+      <h3 class="card-title">Documents On File</h3>
+      <ul class="checklist" style="margin-top:12px;">
+        <li>Emergency Operations Plan (2024)</li>
+        <li>Evacuation Procedures — All Hazards</li>
+        <li>Floor Plans — Ground &amp; 2nd Floor</li>
+        <li>Assembly Area Map</li>
+        <li>Reunification Protocol</li>
+        <li>Utility Map</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="two-col">
+    <div>
+      <div class="card blue">
+        <h3 class="card-title">Responder Notes</h3>
+        <p>Main entrance requires buzzer release from office. North parking lot gate is padlocked after hours — key on Knox box at main entrance. Basement stairwell at northwest corner — only access to utility room during event. No elevator. Building is fully sprinklered — panel in basement B1.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card black">
+        <h3 class="card-title" style="color:var(--blue);">School Police Notes</h3>
+        <p style="color:#ccc;">SRO assigned: Officer [Name Placeholder]. Office located Room 101, main lobby left of entry. Two camera systems — main lobby and exterior perimeter. Access to camera system through front office. Lockdown protocol: doors key-lock, no external handle release.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner red" style="margin-top:32px;">
+    ⚠ This is a fictional example. All names, addresses, contacts, and operational details are invented for illustration purposes only.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 14: RESPONDER VIEW ==================== -->
+<section class="panel" id="sec-responder">
+<div class="container">
+  <div class="section-tag">How Information Flows</div>
+  <h2 class="section-title">Responder View</h2>
+  <p class="lead">The school is always the source of truth. Information flows downstream only with the school's knowledge and approval.</p>
+  <div class="divider"></div>
+  <div class="flow-diagram">
+    <div class="flow-box black" style="max-width:320px;padding:20px;">
+      <div style="font-family:var(--font-hero);font-size:1.1rem;color:var(--blue);">School Administration</div>
+      <div style="font-size:11px;color:#aaa;margin-top:4px;font-family:var(--font-body);">Owns and controls all information</div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box blue" style="max-width:320px;">
+      <div style="font-family:var(--font-hero);font-size:1rem;">SYT.PRO Platform</div>
+      <div style="font-size:11px;opacity:0.8;margin-top:4px;font-family:var(--font-body);">School reviews, approves, and manages shared information</div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box black" style="max-width:320px;">
+      <div style="font-family:var(--font-hero);font-size:1rem;color:var(--blue);">FireTactic</div>
+      <div style="font-size:11px;color:#aaa;margin-top:4px;font-family:var(--font-body);">Verified responder platform — First In Safety Foundation</div>
+    </div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-branches">
+      <div class="flow-branch" style="background:var(--red);color:#fff;border-color:var(--red);">School Police</div>
+      <div class="flow-branch" style="background:var(--blue);color:#fff;border-color:var(--blue);">Fire Rescue</div>
+      <div class="flow-branch" style="background:var(--black);color:#fff;">EMS</div>
+      <div class="flow-branch">Law Enforcement</div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="two-col" style="margin-top:24px;">
+    <div class="card blue">
+      <h3 class="card-title">The School Controls Access</h3>
+      <p>The school determines which agencies receive which information. Nothing flows without school awareness and approval.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Responders Get What They Need</h3>
+      <p style="color:#ccc;">Verified responders access current, accurate facility information before an incident — not for the first time during one.</p>
+    </div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    The goal is familiar responders — not surprised ones.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 15: SCHOOL POLICE VIEW ==================== -->
+<section class="panel" id="sec-school-police">
+<div class="container">
+  <div class="section-tag">Dedicated Focus</div>
+  <h2 class="section-title">School Police View</h2>
+  <div class="banner blue" style="font-size:14px;padding:18px 24px;margin-bottom:32px;">
+    School Police play a critical role in preparedness, facility awareness, responder coordination, and emergency response.
+  </div>
+  <p class="body">School Police are often the first point of contact in any campus emergency — and yet they frequently lack the same level of pre-incident documentation that mutual-aid responders expect from other environments. This initiative directly addresses that gap.</p>
+  <div class="divider"></div>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));">
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Facility Familiarization</h3>
+      <p style="color:#ccc;">School Police officers gain documented, structured access to facility information — floor plans, access points, AED locations, utility locations — in a format purpose-built for operational use. Not a binder. Not a PDF. A live profile.</p>
+    </div>
+    <div class="card blue">
+      <h3 class="card-title">Shared Awareness with Mutual Aid</h3>
+      <p>When Fire Rescue, EMS, or Law Enforcement arrives on a school campus, they need to share situational awareness with School Police immediately. This initiative creates a common operating picture so everyone is working from the same source.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Documentation Continuity Through Turnover</h3>
+      <p>Officers rotate. Staff changes. School resource officers are reassigned. When that happens, the institutional knowledge about a campus shouldn't leave with them. A maintained operational profile ensures continuity regardless of personnel changes.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Pre-Incident Planning Support</h3>
+      <p style="color:#ccc;">School Police benefit from the same pre-incident planning tools available to all verified responders — enabling proactive familiarization, tabletop exercise support, and coordinated emergency response planning before an incident occurs.</p>
+    </div>
+  </div>
+  <div class="banner red" style="margin-top:32px;">
+    School Police deserve the same quality of pre-incident information as any other responding agency. This initiative helps make that a reality.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 16: EMERGENCY PLANNING ==================== -->
+<section class="panel" id="sec-emergency">
+<div class="container">
+  <div class="section-tag">Core Documentation</div>
+  <h2 class="section-title">Emergency Planning</h2>
+  <p class="lead">Effective emergency planning requires documentation of the right information — organized, current, and accessible to those who need it.</p>
+  <div class="divider"></div>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+    <div class="card blue">
+      <h3 class="card-title">Emergency Contacts</h3>
+      <p>Key personnel, roles, alternates, and after-hours contacts — documented, current, and accessible.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Assembly Areas</h3>
+      <p style="color:#ccc;">Primary and alternate assembly areas — mapped, marked, and documented with capacity information.</p>
+    </div>
+    <div class="card red">
+      <h3 class="card-title">Reunification Areas</h3>
+      <p>Student-parent reunification zones — clearly defined, documented, and communicated to all parties.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Utilities</h3>
+      <p>Gas, electric, and water shutoffs — location, access method, and responsible party documented.</p>
+    </div>
+    <div class="card blue">
+      <h3 class="card-title">Access Points</h3>
+      <p>Every entrance, exit, and access point — including locked doors, codes, Knox boxes, and gate access.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Critical Information</h3>
+      <p style="color:#ccc;">AED locations, hazardous materials, special needs populations, and structural considerations.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Documents</h3>
+      <p>Emergency operations plans, evacuation procedures, floor plans — centralized and version-controlled.</p>
+    </div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    The best emergency plan is one that exists, is current, and is known by the people who need it.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 17: PREPAREDNESS RESOURCES ==================== -->
+<section class="panel" id="sec-resources">
+<div class="container">
+  <div class="section-tag">Resource Library</div>
+  <h2 class="section-title">Preparedness Resources</h2>
+  <p class="lead">Schools receive access to a curated library of preparedness resources — organized by type and ready to use or adapt.</p>
+  <div class="divider"></div>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+    <div class="card blue">
+      <div style="font-size:28px;margin-bottom:8px;">📋</div>
+      <h3 class="card-title">Policies</h3>
+      <p>Sample safety and emergency policies aligned with Florida school safety requirements.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:rgba(255,255,255,0.2);font-size:10px;font-family:var(--font-label);letter-spacing:1px;">Resource Placeholder</div>
+    </div>
+    <div class="card black">
+      <div style="font-size:28px;margin-bottom:8px;">📁</div>
+      <h3 class="card-title" style="color:var(--blue);">Plans</h3>
+      <p style="color:#ccc;">Emergency operations plan templates and all-hazards plan frameworks.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:rgba(255,255,255,0.1);font-size:10px;font-family:var(--font-label);letter-spacing:1px;color:#888;">Resource Placeholder</div>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:8px;">🗺</div>
+      <h3 class="card-title">Maps</h3>
+      <p>Floor plan templates, site layout guides, and mapping resources for preparedness documentation.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:#f0f0f0;font-size:10px;font-family:var(--font-label);letter-spacing:1px;">Resource Placeholder</div>
+    </div>
+    <div class="card blue">
+      <div style="font-size:28px;margin-bottom:8px;">🎓</div>
+      <h3 class="card-title">Training</h3>
+      <p>Training resources, tabletop exercise guides, and drill planning materials.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:rgba(255,255,255,0.2);font-size:10px;font-family:var(--font-label);letter-spacing:1px;">Resource Placeholder</div>
+    </div>
+    <div class="card black">
+      <div style="font-size:28px;margin-bottom:8px;">📄</div>
+      <h3 class="card-title" style="color:var(--blue);">Procedures</h3>
+      <p style="color:#ccc;">Standard operating procedures for lockdown, evacuation, shelter-in-place, and reunification.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:rgba(255,255,255,0.1);font-size:10px;font-family:var(--font-label);letter-spacing:1px;color:#888;">Resource Placeholder</div>
+    </div>
+    <div class="card">
+      <div style="font-size:28px;margin-bottom:8px;">✅</div>
+      <h3 class="card-title">Checklists</h3>
+      <p>Preparedness audit checklists, pre-event verification lists, and post-incident documentation templates.</p>
+      <div style="margin-top:12px;padding:6px 10px;background:#f0f0f0;font-size:10px;font-family:var(--font-label);letter-spacing:1px;">Resource Placeholder</div>
+    </div>
+  </div>
+  <div class="banner blue" style="margin-top:32px;">
+    Resources are curated through the SYT.PRO platform and accessible to all participating schools.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 18: SUMMER OPPORTUNITY ==================== -->
+<section class="panel" id="sec-summer">
+<div class="container">
+  <div class="section-tag">Strategic Timing</div>
+  <h2 class="section-title">Summer Opportunity</h2>
+  <div class="block-row">
+    <div class="block blue" style="font-size:clamp(1rem,3vw,1.6rem);">Summer provides a unique opportunity to conduct preparedness reviews, facility familiarization, documentation, and pilot evaluations before students return.</div>
+  </div>
+  <p class="body">Schools are often most accessible during summer months — reduced occupancy, administrative availability, and time to complete documentation without disrupting the school day. This is the ideal window to conduct a SYT.360 visit, build the school's operational profile, and complete responder familiarization before the fall semester begins.</p>
+  <div class="divider"></div>
+  <h3 class="card-title">Summer Preparedness Window</h3>
+  <div class="summer-bar" style="margin-top:20px;">
+    <div class="summer-phase blue">
+      <div class="month">June</div>
+      <div class="phase-name">Site Visit</div>
+      <p style="font-size:11px;margin-top:6px;opacity:0.85;">SYT.360 preparedness visit and facility walkthrough</p>
+    </div>
+    <div class="summer-phase black">
+      <div class="month">June — July</div>
+      <div class="phase-name">Review</div>
+      <p style="font-size:11px;margin-top:6px;color:#aaa;">Preparedness review, gap identification, plan evaluation</p>
+    </div>
+    <div class="summer-phase blue">
+      <div class="month">July</div>
+      <div class="phase-name">Documentation</div>
+      <p style="font-size:11px;margin-top:6px;opacity:0.85;">Profile build, overhead imagery, document upload</p>
+    </div>
+    <div class="summer-phase black">
+      <div class="month">August</div>
+      <div class="phase-name">Familiarization</div>
+      <p style="font-size:11px;margin-top:6px;color:#aaa;">Responder familiarization before students return</p>
+    </div>
+  </div>
+  <div class="banner red" style="margin-top:32px;text-align:center;">
+    Students return in August. The window to prepare is now.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 19: DIGITAL TWIN ==================== -->
+<section class="panel" id="sec-digital-twin">
+<div class="container">
+  <div class="section-tag">Future Capability</div>
+  <h2 class="section-title">Digital Twin</h2>
+  <p class="lead">The future of facility familiarization extends beyond floor plans and photos. Digital twin technology offers responders the ability to virtually walk a building before they ever set foot inside.</p>
+  <div class="divider"></div>
+  <div style="border:3px solid var(--black);padding:40px;text-align:center;margin:24px 0;background:#f8f8f8;">
+    <div style="font-family:var(--font-hero);font-size:clamp(1.2rem,4vw,2rem);text-transform:uppercase;margin-bottom:12px;">Future Digital Twin Demonstration</div>
+    <div style="font-family:var(--font-body);font-size:13px;color:#888;font-style:italic;">No live model required for this demonstration.<br>This space is reserved for future digital twin content.</div>
+    <!-- SWAP: embed Matterport iframe or 3D viewer here -->
+    <div style="margin-top:24px;padding:60px 20px;border:2px dashed #ccc;color:#bbb;font-family:var(--font-label);font-size:11px;letter-spacing:1px;">
+      DIGITAL TWIN EMBED PLACEHOLDER<br>
+      <span style="font-size:9px;">Swap: Matterport embed, photogrammetry viewer, or 3D model</span>
+    </div>
+  </div>
+  <h3 class="card-title">Future Capabilities</h3>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr));margin-top:20px;">
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">Matterport</h3><p style="color:#ccc;">3D virtual walkthroughs of school facilities for remote familiarization.</p></div>
+    <div class="card blue"><h3 class="card-title">Photogrammetry</h3><p>Photogrammetric models from standard photography — scalable and accessible.</p></div>
+    <div class="card"><h3 class="card-title">Gaussian Splats</h3><p>Emerging photorealistic 3D capture technology for high-fidelity virtual environments.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">Reality Capture</h3><p style="color:#ccc;">LiDAR and laser scanning for precise structural documentation.</p></div>
+    <div class="card blue"><h3 class="card-title">3D Familiarization</h3><p>Responders navigate a virtual facility before responding to a real incident.</p></div>
+    <div class="card"><h3 class="card-title">Training</h3><p>Use 3D models for tabletop exercises, scenario planning, and team drills.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">Emergency Planning</h3><p style="color:#ccc;">Walk through evacuation routes, access points, and staging areas virtually.</p></div>
+  </div>
+  <div class="banner blue" style="margin-top:32px;">
+    This capability is on the roadmap — not a requirement for the pilot. Preparedness first. Technology second.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 20: OVERHEAD IMAGERY ==================== -->
+<section class="panel" id="sec-overhead">
+<div class="container">
+  <div class="section-tag">Aerial Documentation</div>
+  <h2 class="section-title">Overhead Imagery</h2>
+  <p class="lead">Aerial and overhead documentation provides a perspective that ground-level photography cannot — and one that responders rely on for situational awareness before and during an incident.</p>
+  <div class="divider"></div>
+  <div class="two-col" style="margin-bottom:32px;">
+    <!-- SWAP: <img src="drone-school.jpg" alt="Drone photo of school campus"> -->
+    <div class="photo-placeholder" style="height:240px;">
+      <span class="icon">🚁</span>
+      <span>Drone / Aerial Photography</span>
+      <span style="font-size:10px;color:#aaa;">Swap: &lt;img src="drone-school.jpg"&gt;</span>
+    </div>
+    <!-- SWAP: <img src="school-aerial-map.jpg" alt="School aerial map view"> -->
+    <div class="photo-placeholder" style="height:240px;">
+      <span class="icon">🛰</span>
+      <span>School Aerial Overview</span>
+      <span style="font-size:10px;color:#aaa;">Swap: &lt;img src="school-aerial-map.jpg"&gt;</span>
+    </div>
+  </div>
+  <h3 class="card-title">Why Overhead Imagery Matters</h3>
+  <div class="card-grid" style="grid-template-columns:repeat(auto-fill,minmax(200px,1fr));">
+    <div class="card blue"><h3 class="card-title">Emergency Access Routes</h3><p>Identify approach paths, staging areas, and potential obstructions from above.</p></div>
+    <div class="card black"><h3 class="card-title" style="color:var(--blue);">Assembly Areas</h3><p style="color:#ccc;">Confirm and document assembly zones relative to building exits and surrounding streets.</p></div>
+    <div class="card"><h3 class="card-title">Responder Orientation</h3><p>Give arriving units a bird's-eye view of the campus before they arrive on scene.</p></div>
+    <div class="card blue"><h3 class="card-title">Building Familiarization</h3><p>Overhead context helps responders understand building layout, adjacencies, and perimeter.</p></div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 21: GRANT OPPORTUNITIES ==================== -->
+<section class="panel" id="sec-grants">
+<div class="container">
+  <div class="section-tag">Future Funding Pathways</div>
+  <h2 class="section-title">Grant Opportunities</h2>
+  <p class="lead">Preparedness initiatives like this one are supported by a growing number of federal, state, and private funding programs designed to improve school safety and emergency management.</p>
+  <div class="divider"></div>
+  <div class="card-grid">
+    <div class="card blue">
+      <h3 class="card-title">Preparedness Grants</h3>
+      <p>Federal and state programs supporting school preparedness planning, documentation, and training.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Safety Grants</h3>
+      <p style="color:#ccc;">School safety improvement grants available through FEMA, DHS, and state emergency management agencies.</p>
+    </div>
+    <div class="card red">
+      <h3 class="card-title">Emergency Management Grants</h3>
+      <p>Local and regional emergency management funding to support collaborative preparedness programs.</p>
+    </div>
+    <div class="card">
+      <h3 class="card-title">Public Safety Grants</h3>
+      <p>Law enforcement and fire service grant programs that support pre-incident planning and responder familiarization.</p>
+    </div>
+    <div class="card blue">
+      <h3 class="card-title">Foundation Funding</h3>
+      <p>Private and community foundation support for educational safety and community preparedness initiatives.</p>
+    </div>
+    <div class="card black">
+      <h3 class="card-title" style="color:var(--blue);">Partnership Opportunities</h3>
+      <p style="color:#ccc;">Collaborative funding through joint applications with school districts, municipalities, and public safety agencies.</p>
+    </div>
+  </div>
+  <div class="banner black" style="margin-top:32px;">
+    Identifying the right funding pathways is part of the lessons learned process. The pilot informs the funding strategy.
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 22: FAQ ==================== -->
+<section class="panel" id="sec-faq">
+<div class="container">
+  <div class="section-tag">Questions &amp; Answers</div>
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <div class="divider"></div>
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-btn">Who owns the information? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">The school owns all information. All data, documentation, and profiles are the property of the school. SYT.FYI and First In Safety Foundation are facilitators — not custodians.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Who controls access to the information? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">The school controls all access. The school determines what information is made available, to which agencies, and under what conditions. Nothing is shared without school awareness and approval.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Can one school participate? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">Yes. The entire initiative is designed to start with one school. There is no minimum, no commitment to expand, and no obligation beyond the pilot evaluation itself.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Can multiple schools participate simultaneously? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">Yes. Multiple schools can participate in the pilot. Each school's profile is independent, and participation by one school does not affect or obligate another.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Who uses FireTactic? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">FireTactic is used by verified responders only — School Police, Fire Rescue, EMS, and Law Enforcement — through the First In Safety Foundation. Access requires identity verification and is managed by the Foundation.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">How does the pilot program work? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">The pilot follows seven steps: (1) School Selection, (2) SYT.360 Visit, (3) Preparedness Review, (4) School Profile Build, (5) Responder Familiarization, (6) Lessons Learned Documentation, (7) Expansion Evaluation. Every step is collaborative and documented.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">What happens after the pilot? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">After the pilot, all parties receive a Lessons Learned Report documenting findings, gaps, successes, and recommendations. Together, the school, public safety partners, and initiative team evaluate whether and how to expand — on their terms, on their timeline.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">What does the pilot school have to do? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">Participate honestly. Allow a facility visit. Review the profile and provide feedback. That's it. No financial commitment, no long-term obligation, no software implementation required beyond the pilot period.</div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-btn">Is this a sales presentation? <span class="accordion-arrow">▼</span></button>
+      <div class="accordion-body">No. This is a preparedness initiative. The goal is to build a framework that genuinely improves preparedness, responder familiarization, and facility awareness. Technology supports the mission — it is not the mission.</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ==================== SECTION 23: NEXT STEPS ==================== -->
+<section class="panel" id="sec-next-steps">
+<div class="container">
+  <div class="section-tag">How We Move Forward</div>
+  <h2 class="section-title">Next Steps</h2>
+  <p class="lead">Moving forward requires one willing school, one visit, and one commitment to honest evaluation. Everything else follows from there.</p>
+  <div class="divider"></div>
+  <div class="num-steps">
+    <div class="num-step">
+      <div class="num">1</div>
+      <div><h4>Identify School</h4><p>Identify one educational institution in the Downtown Miami or Brickell area willing to serve as a pilot partner.</p></div>
+    </div>
+    <div class="num-step">
+      <div class="num">2</div>
+      <div><h4>Schedule Visit</h4><p>Coordinate a SYT.360 preparedness visit with school administration — no disruption to the school day required.</p></div>
+    </div>
+    <div class="num-step">
+      <div class="num">3</div>
+      <div><h4>Conduct Evaluation</h4><p>Complete the on-site preparedness visit, facility walkthrough, documentation, and existing plan review.</p></div>
+    </div>
+    <div class="num-step">
+      <div class="num">4</div>
+      <div><h4>Review Findings</h4><p>Share the completed school profile and preparedness review with school administration for review and feedback.</p></div>
+    </div>
+    <div class="num-step">
+      <div class="num">5</div>
+      <div><h4>Document Lessons Learned</h4><p>Compile a formal Lessons Learned Report capturing what worked, what needs improvement, and what all parties learned.</p></div>
+    </div>
+    <div class="num-step">
+      <div class="num">6</div>
+      <div><h4>Discuss Expansion</h4><p>Review the lessons learned with all stakeholders and jointly determine whether, when, and how to expand the initiative.</p></div>
+    </div>
+  </div>
+  <div class="closing-statement">It starts with one school.</div>
+</div>
+</section>
+
+<!-- ==================== SECTION 24: CONTACT ==================== -->
+<section class="panel" id="sec-contact">
+<div class="container" style="max-width:700px;">
+  <div class="section-tag">Get In Touch</div>
+  <h2 class="section-title">Contact</h2>
+  <div class="divider"></div>
+  <table class="info-table" style="margin-bottom:32px;">
+    <tr><td>Name</td><td><strong>Tony Prol</strong></td></tr>
+    <tr><td>Title</td><td>Founder &amp; CEO — SYT.FYI</td></tr>
+    <tr><td>Foundation</td><td>President &amp; Executive Director — First In Safety Foundation</td></tr>
+    <tr><td>Location</td><td>Downtown Miami, Florida</td></tr>
+    <tr><td>Email</td><td><span style="color:var(--blue);">[EMAIL PLACEHOLDER — fill in before sharing]</span></td></tr>
+    <tr><td>Phone</td><td><span style="color:var(--blue);">[PHONE PLACEHOLDER — fill in before sharing]</span></td></tr>
+    <tr><td>Website</td><td><span style="color:var(--blue);">SYT.FYI</span></td></tr>
+  </table>
+  <div class="closing-statement" style="font-size:clamp(1rem,3vw,1.6rem);letter-spacing:3px;">
+    Preparedness First.<br>Technology Second.<br>Partnership Always.
+  </div>
+</div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer id="site-footer">
+  <!-- LOGO SWAP: Replace <img> src with real file path. Current: embedded base64 -->
+  <img class="footer-logo-syt" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAAiUUlEQVR42u2deWAUVbbw762q7s5KNhBjSAiETTbZVAQFDMgzKqjjwLyRDzAKgkAYDCDLh8iqIDI6IrxBFgXZZQ2yGhMSCGETAiSBAELYshmy9lpdVff9cUjZ9JYm6TjOm/P7Q0N39V3PPffcc8+9RQiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIAiCIP+u0Pr+nlKO4yilhBDGmPoh/FNRFPVDRziOc5+4oii15g55OYUxxhhz/0wdqLVUbqi1yu6BGrlPBJ6pcxkURfGkVRtQJHme53nek6b05DFXcoND/z9IY3Ecp4ptWFhYly5dnniic8uWMaGhoVqdVrJKFZUVN/PzL17MPnv2bEFBgforGOuUUsZYo0aBjz0WIUkS/BOGgipJHM+LFkt+fr4bmWOMhYWFhYaGKopCKCWMEUoIoZQQxhjHc9VV1UVFRY80adIoKMh+IFJCyf18IanfcqeEkt8UsFo8yIIxduvWLavVWrd2a968Oc/zjDDIXU2cUnq/CqpisO0eSggjHM8ZDcY7d+60atXqt1I9WE6eF4qLiyorK20fsCM6OloQBEYIIey3mlJKKeEod/Xq1cDAwEcffVRVzLbVFwShpKSkvLzcTfp1V1TwR//+/Tds2FBcVMxcU1FRkZSU9Oprr9r+FvrvscfCi4qKzBaz2Wy2WCwWi+WBP0Sxurq6Y8cOMNU6nQG1Wm1WVpbVajWZTGYLJGQ2W8wWi8VkMsmyPGjQIELIP//5T6tV1Ov1avpOcf8tPCCKosFgaNmy5cNOalBlf3//69evi6JoMpnUHM1ms9OszRaL7adGo1GSpKNHjxJCNm3cZJUko9GoFgxSgGcOHz7stHg8z1NKn3uuj9FoNJlM0FxqCkajURTF9PR0SumE8RMkSTIYDLbpmy0Wg8EgSVJiYiIhRBAE70tV27Zt9+7dq0qPJEliDVarVf1bkiT1mSNHjnTv0V1NAf47OXEy/NxRIiWrlTH23Xff2YqyisALhJAhf/4zY0yWZfvfShJjLC0tDbpz1derXOXyUIC9KMtyq1at6ihYfn63bt1Sk3ooZElijJ08eZIQ8kTnJyRJcpoItEa/fv0c2w3+uX37dqetAanBUExMTHT6DHwy9YOpXhYsKNngQYMrKiogG6vVKsuy4hpZlq1Wq9VqZYyZzea34+PVocNxnFarzc3NVRQF0rFDkiSLxdK+fXtKqV0bwXIhMzPT6W/hk169esHDK1d+rSiKxWKR6wf0pSiKrVvXUbD8fP1u3Ljhqr7uEUVRUZSMjAxIcOPGjYwxURQdH2OMHTx40K6E0GKtW7U2my2uEk89cgTKmZCQ4LTFLBaLoihTpkzxRLA4z+0DWZbj4uJ27toZFBRktVrBKndvX4NM8DwvSZJWq12zdu2IESNkWYZ6iqI4c+ZMSIE6wBjTarXTp0+3m8t5nlcUZcCAAT179lQUBcqgoiiKIAj79u07fvy4VqsF+4R6lbovpSnxRu6EUrpgwUKLxaKaFiqCIMiyPHDgwKeffhoax9YkHTd+nE6nlWXZLk3ojo8XLrRd17spgEcC47m1HhERsX79epASpwKr6kyn2g4U2Ndfr2zfvj0YhjzP7969OyUlFZrDMVNFUYYOHdquXVtFUdTxB+knJk62dXDYirLVap09e7atne5l6mG01nOdC/Xlef7SpdzNmzfDaHfqL5g2bZptpoqihIWFDR8+nDFmp/5lWeZ5/ujRo8nJP2o0Gk9K4TXBAnmfP29e48aNrVaro9EDsztXA8yDTgVFp/NZtGiRrfzNnDkT2sJOSiilsizrdLpp06apSzae5xlj3bp2e+GFAbYjEpAkief5rVu3ZmVlqYtQr1NnsaJeE2xGKV20aJHZbIYGecAAFQRFUQa98kqnTp2gieCZYcOGhYWFgbpylPUFCxYwRjie89aw4jycBJs1azb0L//t2JfqM4IgGI3GkuKSqqoqqIxjv0KdX3rppc6dO4O1yPP8yZMnNm7cxPO8LCtO9dxf//pm27a/KS3G2NSpU3metxuskJrZbJ4/f76tmCqKIjnDcazbpSa5oM7LbFZbtzi1x21tVsgamiIvL2/d+vVOlZYsy4JGM2XKFBBBGJ/jx423deg8oK6OHTt8+DDHcbIk1zoEPFS6HgkWIeS/Bv6Xv78fqBbH6c9gMCRMTOjQoUP7Du0ff/zx119/Pftitq1sqc1ktVoppa+99qo6w1JKP/potsFg4HnOldICSwuE6fF2j//pjT+BLWXXRhzHrVq1+sqVK6CuILWgoGBBEHx9fTUP4t785DjO7nmtVisIgo+Pj1BXf6/7PgN7lHMARqlWq+U4TqfT2j7/2ZIlJpPJUWlByw8dOiQmJgbWiYMHD27Ttg00kaOUzJs711ZivOKW9nTR2OPJHk7tJ+jgGTNmfLXsK/XD3bt3Hzt2LCMjo0WLFrIsC4Kg1ken0xFC+vV7ft68+TAceZ6/cePG0s+Wzv5oNsxlzpTWXxcvXnzlyhVCSOLkyVqt1mq12koGiF1VVfXixYtsPa6EkKSkpLJ790SryPM8Y4TS+zo4KCh42LA3nU7rHMf98ssv+/btU3Wk2hGKIpeVlzs17zySKepcUfE8n5eXN2bMGLuUVXsZRmBFRblqePA8f+3atW+//fa9996zaw1KqSRJPj6+kyZNSkhI4Cg3ceJEx3yha9LT05OTk6FNvOyd8sTLsGf3btA3dg4FcCXExsYSQnx8fARB4HkepCc+Pt7WBaLX64uKiq5du5adnb1lyxab8UE5jgsICLx16xZMW3ZZwBJ6/fr1hJCWLVoa9HpYBzg+s2DBAqd+L6c0adLEbDJDJznWaMuWzd7c3wB3g5/fzfyb0Bq2OUo2PqqH8uNTSqObR+v1enAH2Dl6FEXRV+uDg4Of7PGkY6ZqvgMGDFAbDQRr4sSJ4Mtw2hEeuhtql9D7KxEXCYF6WLBgwZAhQ+7evav+RKPR7Nu377333rt79+69e/fKysoMBkN1dTV41ZmN+QUaQq+vnjt37urVqx01gaq0pn3wwfDhw/38/e0GKIz4X38tWbp0KayA7DrATv/DRBkcHMxcG+JarQ4GiVMLpo5mFiNucvRk7xV0vG2t82/mf/vtt+PHj3eqtPwD/CckTIiKjCKEMIXZGj6gn1JTU1V19VArU69prE2bNjmVYhgcjLFff/11zZo1f3rjT+Hh4XULkeB5/syZM071IoytvXv3goPRqY6ZMtmjkaRajS2iWxiNRlcaa/uO7Z4rP48dpL75+fmuNNaZM2d4tzi6ZEFpRUZGVlVVOSotoLq62mg0On4Omfbt29e2mp5orMmTJ3vHQQqNcvnyZVeiCiZ248aN33777R3bd+Tm5qalpc2fPz82NjY4OFh9RqPRQEM4LivUxcuMGTOcrjvAzH/llVeio6PtHoCB+8v168tXLH+okUcppa5Naa5BAivcpVmr891xlQ3Lw9u3b69Zs8ZV3QMCAnx9fR3z4nn+wIEDaWlpD9Vo3jTeQZ5SUlLmzp3rah8DJhfwkQQHB/fp06dPnz6zZs26fft2SkrKtm3bDh8+DBEBrtxLUNUff/xx7969gwYNcrTi4RlHuQShnDd3LqyPHsJ35daF3iABRzVxE06HbsuWLdesXXM/ksEmpo0woiiKVqvdunXL/v0H7GZnqP5nn30WHx8fGBjo6FBQI0rsclQYmzN3DvnXxibBSvj06dNO5ymn+4N2m9Dnss69Ff8W1MGNdFJKOnToYLFYwM+k1AYU5ueff4aZwlMXC8fBOsBkMrmaCnc0xFTo5+d0KlR9VO756KOPnM5BUMhPPlnkSe+oFdyzZ49jBT2ZChMnJxJv7RWCtvzggw88Md9ACsHFIMuyVbLKstzliS7frP0mNTW1RYsWtvszDoqdz8nJWb16tVOr2VV2s2b9f1BmD2dX0t/HT+6pGoQud4rJZJIkyWQ0unHEf/HF5+Xl5TzH19oIYHXMmTOn7mrXW1s6ME+lpqbOnDFTEAQY5R5KpMDXSJjV2rdv37S0tLZt2riSrfvz2rx5ZffKap3XYF2TnJx84MBBzwXxgW5mblr/XzAtCG5xpenByiwuLl62bBnlaK2NxvP8jh07zp07V5dG89wb4uFzUKBPFn3ywQdToQkURZElTxfesOcjimJkZOTuPXsaNWrkdHYHgSsuLl64cCEY7O57QlGU6dNn1FV9MOZOhzSEZNXPcqPueodSumzZstLSUkdHvJ1nx2w2wyZ93RwHnva45ymCbC1Z8lmfPn1SUlJ4nhc0AhjjYDTUmoJGoxFFsV27dtOnT3c7IXIr/mfF5cuXQXzdFGbLli0//3ymjiOvQU8ENIhouTvgwHFcaWnp559/4ejJs9v12rBhQ15eXp036al3NZZtd2ZkZPTv3z+2f+y3335bWFjI87xGowEzEIxuN0INsjJmzJiwxk522tXZ0Gw22wZ+OD7D87xeb5g1a1bdg6//Jashd3ky90Y3Y4p7E41Sunz5V3fv3HU6IBljgiAYDIaPP/64XhHr1Hs2lu2eKHjVBUFITUmNj4/v3Lnza6+/vmrVqry8PHBWqWa7m/krNDT0+X7Pu1p2gfgmJSUl/5jsyvdNKV2+4qsbN27UfeS5D1trEDeWuz6hlHPlGtXpdBzHaTVa9zMUx3GVlZV///zvxNkZNWi0VV9/XWujeUWVe7TpaFcI23+Wlpbu2b17z+7dGo2mY8eOvXr1io2N7devX2hoqJuZnjHWvXv37du3u++CS5cvDXhhgKt0si9me/3MYB3mLNvjHu7PUbpKE2Ti6tUrCQkTfzNiKGwBEXpf2fCXL+eBfLgvzNWrV93I8OW8vFob7XeKboBNA61Wy/O8RhC4migOjUYTEBBgMpmOHTtGCLFarefOnTt37tzy5csfffTRiRMnwlzmtA6U0oiIiFotQYgtdvNtvfatWL2NaUpBN9t2tnuDj7k2hysqKg4dOlRP2xnmk3o2mld2AwX3DQcWz549eyAcURAEO0ExGo0REY9VVVXDqIW5sqioaObMmY0aNRo/fryjDx1SgAiI+tSwngGitXl7apcqcLs0adKka9cugYGNCgsLz5w5I4qiy4nGrQuI5wX3/tha1KFnE5kXomo902dcrdO2oiglJSXqJqga1ginO/z8/F5//Q1FUTQaDdhPjDFfX19BEFJSUpwKhzpASf32E+o9sFidv4RiazSahQsX5ubmHjp0ePv27RkZGefPnx8yZIirONvaqqO43yv0uL711Te1dIpXQpNBmLKystQza7azAPgwFy9e1L17dzgtBOsX8BS/+eYwN6UEU6BeLrj63YPgdg+6lvaD6m//fvvMmTMbN24Mh8NkWW7Xrt22bdvGvDvGMVaz9vHuJWOxNvlj9RRM7/ixanagU2Gjxk5KoO2aNGmSlpa2ZMmSfv36tWjRIiYmJi4ubteuXW+88SenYxc+OXHiRD21ToNeTeEmaVjMx8fHD351MBy1gzHGcRz4875c9mWbNq1dOeoaTNF41w9VV33mofEO3pH09LQb129Et4h2bCyY/vz9/adMmTJlyhSLxQKH39XfOvV/Xr129fTp025ceX9kX6UsyxylY8eOVU812o4ZOEE5evS7U6dOfShXyO/jVvMoF+aFctausXieN5lM//jyH67kAD6H0706nU6r1cLU4FS0QdpWLF8B5y1r0zr0jzZ0YXXStGnTNq3bOMamqkb9U0895egaoLVkSn+Hinmm5b3QKZxHA5TjVq5cef78BY1GI0mSU9kCvyjYWK6uLpIkSaPRZGdnr1y50rP4MvdLa6XhNJZ7iQ8ICND56Nz4XX18fRwTYW4z9d7MzhrUfvDaXiEkZDab33zzrxUVFa5ky7ZZnX4FUlVdXT1s2P8zmUz1ryTH1StYqm4LUihz6b17er3eaflhXVxcVEweMpyLes14/z1y8YJgkZrAjNzc3JdffrmoqEij0dh5BWv9OUhVWVnZ4MGDL1w4/3Chng1j7jL36z63Lpjy8vJjR49BYJPjA5TSpKSkh+5FL2ks94qc/V5b7w8XNnP8+PHevXsfPHgQIoRIza6zYwAkOLogiBR2qTOOHXv22eeOHDnieTCCq0PMQP1F003ijsey7Qb9vPnzYVtXDdqUFUUURa1We/7ChY2bNjqKHSUE2sRFfbwWGlXPRnNzCtzzg+APcUARZOv69etxcXFDhwxJmDjx2Wef9eQaiXPnzn311VfffPONeprZwxwDAwNVCbYFMvX18a1P6wuCEBAQ4Pg5JN4oqJF7o/Pnn8+MGjVq5cqVtvtOAs9fvnz5z2+8YTKaHJeElOPCGoc5rREhJDQk1CtSBac7XTaar+/vkMLDCZbapoyxbd9/v+3777t16zbghQG9e/WOiYkJCwsLCAgAuTEYDGVlZdevXz916lRycnJmZiaIuecHQqBLDhw4YDabJUmCxZd6pyOoivMXLpA67VFAYcrLy5cvX67RaNQDCPC5LMsajebs2bNuJg6wDdauXXv+/PkJCQlPPtnD38+/sKBw7w97V6xYUVlZyVEnjgZRFJcvXw4OVcqBfxbuYmA8z9+8me8VszovL2/VqlWSLNmGKcMcotVqoV6uGg0+P3v27OrVayTJanfDD+zpwcHa2u8drlsdwEhSy81xXKNGjfz9/VXBqq6uttua9XCr698IVSdxHKfT6WBFQlyfRPqPgtazZV1dWqR+W+ul3LWm70Z9svpdVeVm1eZhXD8cDYInIUH3pXJzVZ3nJwnqUy9XneV5s3uSgteccupNc7aa8/+Yfqq1+v859UWQf8+p0M0IttVedjdb2ip/uyt71Bvkba03p8/b6WrHVzaoDzv6bNU73+2esSsPpKZaUbZpquWstRh2H9pOIo6ZuvrEk7rb/db2Ln7btlUL4LRZ/v1mCleGhdpGjvciu7JRHspE83AW+8MuDh62Op402u9T5QbJo0mTJgGBgbIkKUyxitbi4mL4PDw8XKfTyYpMGGGM3blzR60qYywkJKRly5YWiyUnJweGIM/zERER4KSglFZWVlZUVFBKfXx8mjZt+tvo5LnSX3+1WMTIyEjGmCxLlFK93nDv3j1CSEhISHBwsCzLHEcVxggjJSUloaGhOp3OYDCUlJRQSv38/MLDw81ms1okyFoQhIKCAovFEhUZyfH87du3ZVn28fEJDw+vqKisqqqMiIigFLwGlFJaXV1dWVHZLKoZY0yRFVBU1dXVZWVlkZHNNBptYWGhyWSC+jZt2jQgIKCsvKy87P6LHgL8/R9p2lQUxTt378CrK7RabYeOHQljOTk5oihSSgVeaBbZrGbtolDKGY3G0tLSiIgInU5XWFhoNpt1Ol14eLjZbCosLILVVVBQUKtWMSazOTcnFyoYHBwcEhJSc/iHUkqKi4vNZssfdJDB4Fi3bp3ZbDYYDYwxvV6/f//+qKgoQkhGRobJZLKIFrj2/cSJE507d4YBNHrU6IK7d0FWTpw82aFDB0JIyxYty8rK4IYFiHj+8MMPCSEvvviiyWSC3Tpg9OhRUVFR8IYF+KS0tHTZsmWEkHlz58JllgaDAb6NjY2Nj4+XJOnOnTvNmzcnhGzbtk1RlAkTJqhuwKaPPFJQUGC2mJ955hl//4Di4mKz2fzpp58SQgYM6G+xWJavWNG6dWtYyhkMBijMho0boptH2xaDMbZ27VpK6K1bt8xm88CBA9Us9u3bZ7FYFi5cCD5JQsiwYcNgXPn6+RJC+vbtm52dDYlcuHDhySefJIS0atWqsqLSZDKpux379u0jhFy6dMlisezYsYMQ8swzz5jN5p9++gk6ZcSIEfDiAsZYamoq3Njz8cKPzWazwWBQyxnbP5Z477qKBhGszZs3w0bsTz/9dK/0HmPshx9+IIT8/PPPjLG8vCtJSUkFBQWMsczMTEJIXFwc1G3nzp1ZWecZY3l5eb6+Ps2jmlssFsbY8ePHjx49Cs/06tXruWefZYxZLJaTJ0+kpR05ceLEyy+/1KpVK3ggJSUlNTW15u7NQUOHDD19+nRxcTFI25kzp/v0eY7n+WvXfmGMzZ8/Pzo6WlGU/Pyb/v4B6pGbRx55pLy8nDHW+9ne/n5+0AGiKEY1j+rZsydjbN26dRERzU6dOnXz5k3GmNFozMrK+vDDD2NiYqAY58+fT0lJOX78+LRp0zQaTWlpKWMsLi5OFazkH5MZY4sXL1YFK/6ttxhj+fn5As83a9assrKSMZaenn7o0CHGWHl5eXBwcFRUlFW0MsYuXrx45EjqiRMnliz5FC4zgnyffvrpDu07MMZOnjpJCOn1TC/4/ODBgxcvXmSMHT58iBCyZMlnjLGysrLMzMzMzMyTJ0/26NGd1Dsut2EF67vvvlMUZdu2rYSQcePGiaJ4584djSAcPXpUUZQZM6YTQqZMnmK1WgsLCzmO27Vrt6Io6enphJDOnTvDcH/11cEhISFmk1lRlI4dOxBCzp3LEkVxcmLiU089pShKQcFd28teu3btqiiKaBX9/P0IIdnZ2aIoLv50MXy7evVqRVHgHSrQr0OH/gXeuJTyUwpj7J1R79j6mZo+0rS0tFRRlN69e/v7+VdXVUH3bNy4sUePHoqibN26BVJ+5513FEXJy8uDvZ3OnTrD5mmXLk+oZQsJCSkoKFAU5cUXX1QLcOjQIUVRFn3yiSpYI0eOVBQlP/8GIWTGjBlgLcBXKSkpJ06caNOmzaNNHzUZTVAw202Y69ev33+7TOqRHt17MKaAi/y7775jjJ0+fZoQ0qP7/YtkAwMDP/roI0VRDhzY30CS0CCXmfIcTynt1Knz/PnzB70ySKPR5OfnS7Ks0+oopX8eMqRV69b9Y/sLgnD27FnGWPv2j1NKs7OzOY67efNmSXFJVPOobt27p6WlczxHKZ06dWplZVW7dm01Gs3F7Gw4uBEaGnb+/AWe55OTk8eNGwcywXP8l19+6efr17p1G41Gk3Es476PjTzwzguO477/ftuECeOfe+65yMjInJzcDd9teMBjTm1WZIRpNNry8nJCyNChQ+/euas6ISml8OYsjvstdBv+u3v3HkmS7hbcfb7f84qiUGp/6Rzk8KCTlKhvvujWtStj7NovvzDGYmOf/+KLL0RRrK6uFjQC/HLTpk1ms7mqurp//1iD3qDRaIxGY1VVVd9+fePj4xXl/nrw8ccfZ4xlZZ2jlOZeyu3bp6+gEURRhL54plevnJwcHx+ff65cueTTT714TUiDCBblKCGkXbt2s2bNIoRcvXr1/cRExhjPc4SQbl27devaDfakxowZKwgCvHRJXZNLskRq3sQETT9ixEhCiCRJ69evO/zjjy/HxYHSbty4Mc/zAQEBtn32ztvvwB+zZ8/em7RX0AhWq1Vhit3iXFGUj2bPPvxjMsfRjz9eaLFYBEGwDXylNutwrU53Oe/Srl2758yZ8+6Yd0lNkAtjTFFku906SigjLDg4WFGUyspK7v414/dfKgH7u2pMG8dzNpfJ/OZY9vHxoZSaTaaYmJiffkqBhydOnLhu3TpomeCgIKVRoCAIAicQRgRB0Ov1f//8808XLx751khKKRRMq9VRSiVJ5nleFMX0o+n3B7/AE0K0Gm3jxo21Wq2fj693T/82yIQK4z4lJeWZXr169uzZpUuX06dOEUJE0UoI+WzpZ0uX/h2MpDt3bsuyXFhYqChKZGSUJEk+Pj6NGzemlF65eoXU+F0SEhKefvrpDh07jhz5lhpwVFpaGh7+aEhIyPDhwyFKhxBitVqHDx8O88K1a9cYYZwzaxQ67/qNG7DVevXqVcfrDJjN/2VZCgoK/vzzz69duxYUFOTGz84IURijlPbr1zc0NLR79+6SVVKDsCsrKyVJguUIvAYC3gWn1+vvv3WxJqi8sLBIUZTo6OjCwoKRI0fCldJWq5Wj9y/hiXspLiQkNCYmpqy8TNAIkiQFBwd/s2ZNxrEMf39/VUoKCwsURWnWrJkkSWFhYWlH0vbt3+/r6ws7m+np6U2bNg0JCZk7by5Ey/yhp0II3CkqKjqRmanaXnAJmyRJt2/fTtqT9P77k3r27Dl48KCkpL07d+3s/Wzv/v37JyYmdurUKSgoyGQyHTxw0M/fH85/nj179tSpU2CdWK1WwpgkSTqdbt7ceUaTyc/Pb8fOHfoqPeibXbt2du3S9W+T/jZ58uQtW7ZIVishRKl5fdcDlecFKKpGIzgKihpPRggB4aiqqpo5c+a2bdvsXmwBEVw1Igt375Jx48bfunXLz8//XNbZH/b+AI+NHTv2hRcG6nTapUuXQuBGbGx/xkhgYODmzZv11Xo1qR07d4x+d3Tbtm0XLvz40qVL4eGP1UyWRFZkKtF3R48ZMOAFHx/f3NyczZs3y7LCGDOaTFOmTsnIyIBrRAghW7duHThwYP/+/adPn96pU6c+ffuUlJRYLBaoe3R09Jw5c+DSjbVr1167ds37b7j0ovG+c+dOWIbAYXx19Jw/f54xtuSzJeoKMTMzE173sHXLVnXdazKbhg8fTghp06YNfBL3UpztnTavvfaaXVzhtGnToqOj4e+IiIhuXbvB3+o7ODdu2MgY27VrFxQS5txWMfcXkn369iEPvqczPDwcHFF9+jzn5+fHGKusrPDx0RFCUlNTGWN7kvZAymPHjmWMlZQU+/n5EUK6dOliV7bk5GSe5+UHX//XvXv3lJQU20+mTp3y+muvMcZKf/0VDPavvvpK/fbKlStQzeDgYLv0z5w5QwjR6w2MscjISELIpo2b4HpOqNT69evVh6uqqmBlaps4MHjwYC+6G4SGmARXrlyZmZmZm5urBpeqbwKKiorKzDxOKX3vvfd69+plNJnBUfmX//7Lho0bevTortcb9u/fn5OTQyktKip6b+xYnY9P9sWLttcGZ2VlvZ+YqNScjxUE/qeUlHv37k2aNEkUxaqqqrt3744aNSooKKi8rBx+smbtmrPnzubk5NjuXZT8WpKQkKDVaq9euWq3p1FZWTn63dGBgYFXrlwVRevf/jZJr6+GV82MGjVq8ODBly5dgifT09MTExPLyspEUSSE3L59+/1Jkzies1olCGDKzc1lTBk/YYK/v79VFGGizM+/8Y8v/rF//364rBWuJjSZTImJieXlZZJkJYRMmDBhb1LS0z17lpaWbty48dVXX83LyzMY9AkJCfC+NFmReY7/5ZdfCCGTJk3y9fWBl+pOnjL59JnTd+7cBr07YsSI7du39+jRo6qq6ocffrh8+TIhZNOmTdevX1fviaWUug/V+neNDnB6FPY/fR+X0oZI5/dp2wbZ0uE4nuOoY4ARLMjVI2KwLao+oy7X1YgfdVVvF+TkGHJUo7ruh+GTmmt91aQcs3OT/n1lLgjqV7Y3r9olBYnY/dNuoeD4mhr1baC2VYDQbadtosbuOr6dyjZ9qLtdkZy2rWPQVT3j2xAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAEQRAE+T/D/wIu4t9UgkCzngAAAABJRU5ErkJggg==" alt="SYT.FYI — Property Intelligence" title="SYT.FYI">
+  <span class="footer-tagline">Preparedness First. Technology Second. Partnership Always.</span>
+  <!-- LOGO SWAP: Replace <img> src with real file path. Current: embedded base64 -->
+  <img class="footer-logo-ft" src="data:image/png;base64,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" alt="FireTactic" title="FireTactic">
+</footer>
+
+<script>
+// ===== SECTION MAP =====
+const SECTIONS = [
+  { id:'home',          el:'sec-home',          title:'Home',                    keys:['home','homepage','start','overview main'] },
+  { id:'about',         el:'sec-about',          title:'About Tony',              keys:['tony','about','prol','firefighter','paramedic','founder','ceo','miami beach'] },
+  { id:'overview',      el:'sec-overview',       title:'Initiative Overview',     keys:['initiative','overview','objective','scalable','collaborative','pillars'] },
+  { id:'why-edu',       el:'sec-why-edu',        title:'Why Educational Facilities', keys:['educational','facilities','k-12','k12','charter','private','college','university','trade school'] },
+  { id:'why-downtown',  el:'sec-why-downtown',   title:'Why Downtown Miami',      keys:['downtown','miami','brickell','geography','urban','zone','pilot zone'] },
+  { id:'ecosystem',     el:'sec-ecosystem',      title:'Educational Ecosystem',   keys:['ecosystem','mdcps','academica','miami dade college','mdc','fiu','hub','spoke','network','partners'] },
+  { id:'challenges',    el:'sec-challenges',     title:'Current Challenges',      keys:['challenges','problems','silos','turnover','complexity','coordination','gaps','barrier'] },
+  { id:'pilot',         el:'sec-pilot',          title:'Pilot Program',           keys:['pilot','program','steps','timeline','selection','visit','syt360','360 visit','lessons','expansion'] },
+  { id:'pilot-benefits',el:'sec-pilot-benefits', title:'Pilot School Benefits',   keys:['benefits','pilot benefits','school benefits','what school gets','access','report','two year','2 year'] },
+  { id:'syt360',        el:'sec-syt360',         title:'SYT.360',                 keys:['syt360','syt.360','360','no cost','free visit','walkthrough','aed','utility','assembly','floor plan','profile'] },
+  { id:'sytpro',        el:'sec-sytpro',         title:'SYT.PRO',                 keys:['sytpro','syt.pro','platform','dashboard','repository','documents','preparedness platform'] },
+  { id:'firetactic',    el:'sec-firetactic',     title:'FireTactic',              keys:['firetactic','fire tactic','first in safety','foundation','responder platform','verified','training','pre-incident','pre incident'] },
+  { id:'school-example',el:'sec-school-example', title:'School Example',          keys:['school example','brickell bay','example','demo','fictional','sample','profile example','what it looks like'] },
+  { id:'responder',     el:'sec-responder',      title:'Responder View',          keys:['responder','responder view','flow','information flow','fire rescue','ems','law enforcement','downstream'] },
+  { id:'school-police', el:'sec-school-police',  title:'School Police View',      keys:['school police','police','sro','resource officer','school police view','famil'] },
+  { id:'emergency',     el:'sec-emergency',      title:'Emergency Planning',      keys:['emergency','planning','emergency planning','contacts','assembly','reunification','utilities','access','documents'] },
+  { id:'resources',     el:'sec-resources',      title:'Preparedness Resources',  keys:['resources','library','policies','plans','maps','training','procedures','checklists','resource library'] },
+  { id:'summer',        el:'sec-summer',         title:'Summer Opportunity',      keys:['summer','opportunity','june','july','august','summer window','timing','before school'] },
+  { id:'digital-twin',  el:'sec-digital-twin',   title:'Digital Twin',            keys:['digital twin','twin','matterport','3d','photogrammetry','gaussian','splat','lidar','reality capture','virtual'] },
+  { id:'overhead',      el:'sec-overhead',       title:'Overhead Imagery',        keys:['overhead','aerial','drone','imagery','photography','bird','map view','site view'] },
+  { id:'grants',        el:'sec-grants',         title:'Grant Opportunities',     keys:['grant','grants','funding','fema','dhs','foundation funding','partnership funding','money'] },
+  { id:'faq',           el:'sec-faq',            title:'FAQ',                     keys:['faq','questions','who owns','controls','one school','multiple schools','how does','what happens','after pilot'] },
+  { id:'next-steps',    el:'sec-next-steps',     title:'Next Steps',              keys:['next steps','steps','move forward','how to start','action','identify','schedule','expand'] },
+  { id:'contact',       el:'sec-contact',        title:'Contact',                 keys:['contact','tony','email','phone','reach','get in touch'] },
+];
+
+// ===== ROUTER =====
+function showSection(id) {
+  const sec = SECTIONS.find(s => s.id === id) || SECTIONS[0];
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn, .drawer-btn').forEach(b => b.classList.remove('active'));
+  const el = document.getElementById(sec.el);
+  if (el) el.classList.add('active');
+  document.querySelectorAll(`[data-section="${sec.id}"]`).forEach(b => b.classList.add('active'));
+  window.scrollTo(0, 0);
+  if (location.hash !== '#' + sec.id) history.pushState(null, '', '#' + sec.id);
+  closeDrawer();
+}
+
+function getHashId() {
+  const h = location.hash.replace('#','');
+  return SECTIONS.find(s => s.id === h) ? h : 'home';
+}
+
+window.addEventListener('popstate', () => showSection(getHashId()));
+document.addEventListener('DOMContentLoaded', () => showSection(getHashId()));
+
+// ===== NAV BUTTONS =====
+document.querySelectorAll('.nav-btn, .drawer-btn').forEach(btn => {
+  btn.addEventListener('click', () => showSection(btn.dataset.section));
+});
+
+// ===== HAMBURGER / DRAWER =====
+const hamburger = document.getElementById('hamburger');
+const drawer = document.getElementById('nav-drawer');
+function closeDrawer() {
+  hamburger.classList.remove('open');
+  drawer.classList.remove('open');
+}
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  drawer.classList.toggle('open');
+});
+
+// ===== SEARCH =====
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+const searchClear = document.getElementById('search-clear');
+
+function searchSections(query) {
+  if (!query.trim()) return [];
+  const q = query.toLowerCase();
+  return SECTIONS.filter(s =>
+    s.title.toLowerCase().includes(q) ||
+    s.keys.some(k => k.includes(q))
+  ).slice(0, 8);
+}
+
+function renderResults(query) {
+  const results = searchSections(query);
+  if (!query.trim()) {
+    searchResults.classList.remove('open');
+    return;
+  }
+  searchResults.classList.add('open');
+  if (results.length === 0) {
+    searchResults.innerHTML = '<div class="search-none">No section found — try: <strong>pilot</strong>, <strong>school example</strong>, <strong>responder</strong></div>';
+    return;
+  }
+  searchResults.innerHTML = results.map(s =>
+    `<div class="search-item" data-id="${s.id}"><strong>${s.title}</strong></div>`
+  ).join('');
+  searchResults.querySelectorAll('.search-item').forEach(item => {
+    item.addEventListener('click', () => {
+      showSection(item.dataset.id);
+      searchInput.value = '';
+      searchResults.classList.remove('open');
+      searchClear.classList.remove('visible');
+    });
+  });
+}
+
+searchInput.addEventListener('input', () => {
+  const val = searchInput.value;
+  searchClear.classList.toggle('visible', val.length > 0);
+  renderResults(val);
+});
+
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const results = searchSections(searchInput.value);
+    if (results.length > 0) {
+      showSection(results[0].id);
+      searchInput.value = '';
+      searchResults.classList.remove('open');
+      searchClear.classList.remove('visible');
+    }
+  }
+  if (e.key === 'Escape') {
+    searchResults.classList.remove('open');
+    searchInput.blur();
+  }
+});
+
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  searchResults.classList.remove('open');
+  searchInput.focus();
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#searchbar') && !e.target.closest('#search-results')) {
+    searchResults.classList.remove('open');
+  }
+});
+
+// ===== FAQ ACCORDION =====
+document.querySelectorAll('.accordion-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const body = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    // close all
+    document.querySelectorAll('.accordion-btn').forEach(b => {
+      b.classList.remove('open');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      body.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
